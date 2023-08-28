@@ -3,6 +3,9 @@ package org.example;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
+import org.example.services.InstructorService;
+import org.example.services.StudentService;
+
 
 public class CourseraApplication extends Application<CourseraConfiguration> {
 
@@ -23,7 +26,12 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
     @Override
     public void run(final CourseraConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+
+        final StudentService studentService = new StudentService();
+        final InstructorService instructorService = new InstructorService();
+
+        environment.jersey().register(studentService);
+        environment.jersey().register(instructorService);
     }
 
 }
