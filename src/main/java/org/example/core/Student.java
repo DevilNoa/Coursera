@@ -1,10 +1,7 @@
 package org.example.core;
 
 public class Student {
-    private String id;
-    private String firstName;
-    private String lastName;
-    private final String timeCreated;
+    private final String id, firstName, lastName, timeCreated;
 
 
     public Student(String id, String firstName, String lastName, String timeCreated) {

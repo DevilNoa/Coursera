@@ -13,9 +13,6 @@ public class InstructorDatabase {
         this.connection = connection;
     }
 
-    public String getAllInstructors() {
-        return "all instructors";
-    }
 
     //creating and instructor in the db
     public void createInstructor(Integer id_instructors, String firstName, String lastName) {

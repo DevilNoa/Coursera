@@ -7,13 +7,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class CourseraConfiguration extends Configuration {
-    private final String jdbcURL = "jdbc:postgresql://localhost:5433/postgres";
-    private final String username = "postgres";
-    private final String password = "admin";
     private final Connection connection;
 
     public CourseraConfiguration() {
         try {
+            String jdbcURL = "jdbc:postgresql://localhost:5433/postgres";
+            String username = "postgres";
+            String password = "admin";
             connection = DriverManager.getConnection(jdbcURL, username, password);
             System.out.println("Connected to the database server.");
         } catch (SQLException e) {

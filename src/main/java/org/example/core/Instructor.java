@@ -1,8 +1,8 @@
 package org.example.core;
 
 public class Instructor {
-    private Integer id;
-    private String firstName, lastName, timeCreated;
+    private final Integer id;
+    private final String firstName, lastName, timeCreated;
 
     public Instructor(Integer id, String firstName, String lastName, String timeCreated) {
         this.id = id;

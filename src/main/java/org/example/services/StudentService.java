@@ -13,9 +13,6 @@ public class StudentService {
         this.studentDatabase = studentDatabase;
     }
 
-//    public String getAll() {
-//        return studentDatabase.getAllStudents();
-//    }
 
     public List<Student> getAllStudentsAsList() {
         return studentDatabase.getAllStudentsAsList();

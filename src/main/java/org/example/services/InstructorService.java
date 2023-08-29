@@ -12,9 +12,6 @@ public class InstructorService {
         this.instructorDatabase = instructorDatabase;
     }
 
-//    public String getAll() {
-//        return instructorDatabase.getAllInstructors();
-//    }
 
     public List<Instructor> getAllInstructorsASList() {
         return instructorDatabase.getAllInstructorsAsList();

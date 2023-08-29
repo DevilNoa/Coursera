@@ -14,9 +14,6 @@ public class StudentDatabase {
         this.connection = connection;
     }
 
-    public String getAllStudents() {
-        return "all Students";
-    }
 
     //print all students
     public void printAllStudents() {
