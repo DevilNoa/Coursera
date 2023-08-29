@@ -1,0 +1,116 @@
+package org.example.db;
+
+import java.sql.*;
+
+public class StudentDatabase {
+
+    Connection connection;
+
+    public StudentDatabase(Connection connection) {
+        this.connection = connection;
+    }
+
+    public String getAllStudents(){
+        return "all Students";
+    }
+
+    //print all students
+    public void printAllStudents() {
+        try {
+            String sql = "SELECT * FROM students";
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            while (result.next()) {
+                String id = result.getString("id_students");
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String timeCreated = result.getString("time_create");
+
+                System.out.printf("%s-%s-%s-%s-\n", id, firstName, lastName, timeCreated);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving students");
+            throw new RuntimeException(e);
+        }
+    }
+
+    //creating a new student
+    public void createStudent(String id_students, String firstName, String lastName) {
+        try {
+            String sql = "INSERT INTO students (id_students, first_name, last_name) VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id_students);
+            statement.setString(2, firstName);
+            statement.setString(3, lastName);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error creating student");
+            throw new RuntimeException(e);
+        }
+    }
+
+    //removing a student
+    public void removeStudent(String id_students) {
+        try {
+            String sql = "DELETE FROM students WHERE id_students = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id_students);
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows > 0) {
+                System.out.println("Student removed successfully.");
+            } else {
+                System.out.println("Student not found or removal failed.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error removing student");
+            throw new RuntimeException(e);
+        }
+    }
+
+    //changing the info for the student by id
+    public void studentAlter(String id_students, String newFirstName, String newLastName) {
+        try {
+            String sql = "UPDATE students SET first_name = ?, last_name = ? WHERE id_students = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, newFirstName);
+            statement.setString(2, newLastName);
+            statement.setString(3, id_students);
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Student information updated successfully");
+            } else {
+                System.out.println("Student not found or update failed");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating student information");
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //print student by id
+    public void printStudentByID(String id_students) {
+        try {
+            String sql = "SELECT * FROM students WHERE id_students = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id_students);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                String id = result.getString("id_students");
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String timeCreated = result.getString("time_create");
+
+                System.out.printf("%s-%s-%s-%s-\n", id, firstName, lastName, timeCreated);
+            } else {
+                System.out.println("Student not found");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving student information");
+            throw new RuntimeException(e);
+        }
+    }
+}

@@ -1,4 +1,4 @@
-package org.example.services;
+package org.example.core;
 
 public class Student {
     private String id;

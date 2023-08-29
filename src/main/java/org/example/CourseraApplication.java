@@ -4,7 +4,8 @@ import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
 import org.example.api.StudentResource;
-import org.example.services.InstructorService;
+import org.example.db.InstructorDatabase;
+import org.example.db.StudentDatabase;
 import org.example.services.StudentService;
 
 
@@ -28,14 +29,15 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
     public void run(final CourseraConfiguration configuration,
                     final Environment environment) {
 
-        final StudentService studentService = new StudentService();
-        final InstructorService instructorService = new InstructorService();
-
+        final StudentDatabase studentDatabase = new StudentDatabase(configuration.getConnection());
+        final StudentService studentService = new StudentService(studentDatabase);
         final StudentResource studentResource = new StudentResource(studentService);
-
-        environment.jersey().register(studentService);
-        environment.jersey().register(instructorService);
         environment.jersey().register(studentResource);
+
+        final InstructorDatabase instructorDatabase = new InstructorDatabase();
+        // TODO: add others
+        environment.jersey().register(instructorDatabase);
+
     }
 
 }

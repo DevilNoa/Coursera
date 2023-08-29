@@ -12,16 +12,15 @@ import org.example.services.StudentService;
 @Produces(MediaType.APPLICATION_JSON)
 public class StudentResource {
 
-    private final StudentService studentService;
+    private final StudentService studentDatabase;
 
     public StudentResource(StudentService studentService) {
-        this.studentService = studentService;
+        this.studentDatabase = studentService;
     }
 
     @GET
     public String getAllStudents() {
-        // Call the method from the StudentService to get all students
-        return studentService.getAllStudents(); // Implement this method in StudentService
+        // Call the method from the StudentDatabase to get all students
+        return studentDatabase.getAll(); // Implement this method in StudentDatabase
     }
-
 }
