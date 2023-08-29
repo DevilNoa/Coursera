@@ -3,6 +3,7 @@ package org.example;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
+import org.example.api.StudentResource;
 import org.example.services.InstructorService;
 import org.example.services.StudentService;
 
@@ -30,8 +31,11 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
         final StudentService studentService = new StudentService();
         final InstructorService instructorService = new InstructorService();
 
+        final StudentResource studentResource = new StudentResource(studentService);
+
         environment.jersey().register(studentService);
         environment.jersey().register(instructorService);
+        environment.jersey().register(studentResource);
     }
 
 }
