@@ -1,6 +1,10 @@
 package org.example.db;
 
+import org.example.core.Student;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDatabase {
 
@@ -10,7 +14,7 @@ public class StudentDatabase {
         this.connection = connection;
     }
 
-    public String getAllStudents(){
+    public String getAllStudents() {
         return "all Students";
     }
 
@@ -112,5 +116,29 @@ public class StudentDatabase {
             System.out.println("Error retrieving student information");
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Student> getAllStudentsAsList() {
+        List<Student> students = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM students";
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            while (result.next()) {
+                String id = result.getString("id_students");
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String timeCreated = result.getString("time_create");
+
+                Student student = new Student(id, firstName, lastName, timeCreated);
+                students.add(student);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving students");
+            throw new RuntimeException(e);
+        }
+
+        return students;
     }
 }

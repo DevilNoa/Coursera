@@ -4,34 +4,18 @@ public class Student {
     private String id;
     private String firstName;
     private String lastName;
+    private final String timeCreated;
 
-    public Student(String id, String firstName, String lastName) {
+
+    public Student(String id, String firstName, String lastName, String timeCreated) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.timeCreated = timeCreated;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    @Override
+    public String toString() {
+        return String.format("Student[id=%s, firstName='%s', lastName='%s', timeCreated='%s']", id, firstName, lastName, timeCreated);
     }
 }

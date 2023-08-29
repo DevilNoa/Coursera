@@ -3,9 +3,11 @@ package org.example;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
+import org.example.api.InstructorResponse;
 import org.example.api.StudentResource;
 import org.example.db.InstructorDatabase;
 import org.example.db.StudentDatabase;
+import org.example.services.InstructorService;
 import org.example.services.StudentService;
 
 
@@ -26,17 +28,20 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
     }
 
     @Override
-    public void run(final CourseraConfiguration configuration,
-                    final Environment environment) {
+    public void run(final CourseraConfiguration configuration, final Environment environment) {
 
         final StudentDatabase studentDatabase = new StudentDatabase(configuration.getConnection());
         final StudentService studentService = new StudentService(studentDatabase);
-        final StudentResource studentResource = new StudentResource(studentService);
-        environment.jersey().register(studentResource);
 
-        final InstructorDatabase instructorDatabase = new InstructorDatabase();
+
+        environment.jersey().register(new StudentResource(studentService));
+
+        final InstructorDatabase instructorDatabase = new InstructorDatabase(configuration.getConnection());
+        final InstructorService instructorService = new InstructorService(instructorDatabase);
+
+
         // TODO: add others
-        environment.jersey().register(instructorDatabase);
+        environment.jersey().register(new InstructorResponse(instructorService));
 
     }
 

@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         CourseraConfiguration configuration = new CourseraConfiguration();
         StudentDatabase studentDatabase = new StudentDatabase(configuration.getConnection());
-        InstructorDatabase instructorDatabase = new InstructorDatabase();
+        InstructorDatabase instructorDatabase = new InstructorDatabase(configuration.getConnection());
 
         System.out.println("Database connection is active.");
         studentDatabase.printAllStudents();
@@ -39,29 +39,29 @@ public class Main {
         studentDatabase.printAllStudents();
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-//        // Create a instructor
-//        System.out.println("Creating/Removing instructor");
-//        instructorDatabase.createInstructor(3, "Go6o", "Lo6o");
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//
-//        // Print all instructor
-//        instructorDatabase.printAllInstructors();
-//        System.out.println("after removing instructor");
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//
-//        // Removing instructor
-//        instructorDatabase.removeInstructor(3);
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//
-//        // Print all instructor
-//        instructorDatabase.printAllInstructors();
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//
-//        //modifying instructor by id
-//        instructorDatabase.instructorAlter(2, "Stef", "Curry");
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//
-//        //print instructor by id
-//        instructorDatabase.printInstructorByID(2);
+        // Create a instructor
+        System.out.println("Creating/Removing instructor");
+        instructorDatabase.createInstructor(3, "Go6o", "Lo6o");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        // Print all instructor
+        instructorDatabase.printAllInstructors();
+        System.out.println("after removing instructor");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        // Removing instructor
+        instructorDatabase.removeInstructor(3);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        // Print all instructor
+        instructorDatabase.printAllInstructors();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        //modifying instructor by id
+        instructorDatabase.instructorAlter(2, "Stef", "Curry");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        //print instructor by id
+        instructorDatabase.printInstructorByID(2);
     }
 }
