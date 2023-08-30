@@ -17,4 +17,8 @@ public class StudentService {
     public List<Student> getAllStudentsAsList() {
         return studentDatabase.getAllStudentsAsList();
     }
+
+    public void addStudent(Student newStudent) {
+        studentDatabase.createStudent(newStudent.getId(), newStudent.getFirstName(), newStudent.getLastName());
+    }
 }

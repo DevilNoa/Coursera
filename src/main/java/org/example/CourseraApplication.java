@@ -3,10 +3,13 @@ package org.example;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
+import org.example.api.CourseResponse;
 import org.example.api.InstructorResponse;
 import org.example.api.StudentResource;
+import org.example.db.CoursesDatabase;
 import org.example.db.InstructorDatabase;
 import org.example.db.StudentDatabase;
+import org.example.services.CourseService;
 import org.example.services.InstructorService;
 import org.example.services.StudentService;
 
@@ -43,6 +46,10 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
         // TODO: add others
         environment.jersey().register(new InstructorResponse(instructorService));
 
+        final CoursesDatabase coursesDatabase = new CoursesDatabase(configuration.getConnection());
+        final CourseService courseService = new CourseService(coursesDatabase);
+
+        environment.jersey().register(new CourseResponse(courseService));
     }
 
 }

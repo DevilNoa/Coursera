@@ -1,24 +1,28 @@
 package org.example.api;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.example.core.Instructor;
 import org.example.services.InstructorService;
 
 @Path("/instructors")
 @Produces(MediaType.APPLICATION_JSON)
 public class InstructorResponse {
 
-    private final InstructorService instructorDatabase;
+    private final InstructorService instructorService;
 
-    public InstructorResponse(InstructorService instructorDatabase) {
-        this.instructorDatabase = instructorDatabase;
+    public InstructorResponse(InstructorService instructorService) {
+        this.instructorService = instructorService;
     }
 
     @GET
     public String getAllInstructors() {
-        // Call the method from the StudentDatabase to get all students
-        return instructorDatabase.getAllInstructorsASList().toString(); // Implement this method in StudentDatabase
+        return instructorService.getAllInstructorsASList().toString();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addInstructor(Instructor newInstructor) {
+        instructorService.addInstructor(newInstructor);
     }
 }

@@ -16,4 +16,8 @@ public class InstructorService {
     public List<Instructor> getAllInstructorsASList() {
         return instructorDatabase.getAllInstructorsAsList();
     }
+
+    public void addInstructor(Instructor newInstructor) {
+        instructorDatabase.createInstructor(newInstructor.getId(), newInstructor.getFirstName(), newInstructor.getLastName());
+    }
 }

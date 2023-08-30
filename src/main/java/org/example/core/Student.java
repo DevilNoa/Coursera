@@ -1,14 +1,30 @@
 package org.example.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Student {
     private final String id, firstName, lastName, timeCreated;
 
 
-    public Student(String id, String firstName, String lastName, String timeCreated) {
+    @JsonCreator
+    public Student(@JsonProperty("id") String id, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("timeCreated") String timeCreated) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.timeCreated = timeCreated;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override

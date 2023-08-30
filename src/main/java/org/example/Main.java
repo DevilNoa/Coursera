@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.db.CoursesDatabase;
 import org.example.db.InstructorDatabase;
 import org.example.db.StudentDatabase;
 
@@ -14,6 +15,7 @@ public class Main {
         CourseraConfiguration configuration = new CourseraConfiguration();
         StudentDatabase studentDatabase = new StudentDatabase(configuration.getConnection());
         InstructorDatabase instructorDatabase = new InstructorDatabase(configuration.getConnection());
+        CoursesDatabase coursesDatabase = new CoursesDatabase(configuration.getConnection());
 
         System.out.println("Database connection is active.");
         studentDatabase.printAllStudents();
@@ -63,5 +65,27 @@ public class Main {
 
         //print instructor by id
         instructorDatabase.printInstructorByID(2);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //print all courses
+        coursesDatabase.printAllCourses();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //add new course
+        coursesDatabase.createCourse(2, 2, "test", (short) 90, (short) 3);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //print new course by id
+        coursesDatabase.printCourseByID(2);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //modify the new course
+        coursesDatabase.courseAlter(2, "tester", (short) 91, (short) 4);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //print the same course by id
+        coursesDatabase.printCourseByID(2);
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //delete course
+        coursesDatabase.removeCourse(2);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //print all courses
+        coursesDatabase.printAllCourses();
     }
 }
