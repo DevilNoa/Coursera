@@ -1,25 +1,20 @@
 package org.example.core;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Instructor {
-    private final Integer id;
+    private final int id;
 
-    @JsonProperty("firstName")
     private final String firstName;
-
-    @JsonProperty("lastName")
     private final String lastName;
     private final String timeCreated;
 
-    public Instructor(@JsonProperty("id") Integer id, @JsonProperty("firstName") String firstName, @JsonProperty("lastName") String lastName, @JsonProperty("timeCreated") String timeCreated) {
-        this.id = id;
+    public Instructor(Integer id, String firstName, String lastName, String timeCreated) {
+        this.id = Integer.parseInt(String.valueOf(id));
         this.firstName = firstName;
         this.lastName = lastName;
         this.timeCreated = timeCreated;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 

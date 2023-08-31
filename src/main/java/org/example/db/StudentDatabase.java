@@ -138,4 +138,43 @@ public class StudentDatabase {
 
         return students;
     }
+
+    //using get request printing student by id
+    public Student getStudentByID(String id_students) throws SQLException {
+        try {
+            String sql = "SELECT * FROM students WHERE id_students = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id_students); // Set the string value directly
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                String id = result.getString("id_students");
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String timeCreated = result.getString("time_create");
+
+                return new Student(id, firstName, lastName, timeCreated);
+            } else {
+                return null; // Return null if student not found
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving student by ID");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateStudent(String id, Student updatedStudent) throws SQLException {
+        try {
+            String sql = "UPDATE students SET first_name = ?, last_name = ? WHERE id_students = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, updatedStudent.getFirstName());
+            statement.setString(2, updatedStudent.getLastName());
+            statement.setString(3, id);
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Error updating student information");
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -37,9 +37,15 @@ public class Courses {
         return credit;
     }
 
+    public String getTime_created() {
+        return time_created;
+    }
+
     @Override
     public String toString() {
         return String.format("Course[id_course=%d, course_name='%s', time_created='%s', in_instructor=%d, total_time=%d, credit=%d]",
                 id_course, course_name, time_created, in_instructor, total_time, credit);
     }
+
+
 }

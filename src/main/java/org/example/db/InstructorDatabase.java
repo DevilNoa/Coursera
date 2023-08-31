@@ -116,7 +116,7 @@ public class InstructorDatabase {
 
     }
 
-
+    //using get request printing all instructors
     public List<Instructor> getAllInstructorsAsList() {
         List<Instructor> instructors = new ArrayList<>();
         try {
@@ -140,5 +140,49 @@ public class InstructorDatabase {
         }
 
         return instructors;
+    }
+
+    //using get request printing an instructor by id
+    public Instructor getInstructorByID(int id_instructors) throws SQLException {
+        try {
+            String sql = "SELECT * FROM instructors WHERE id_instructors = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id_instructors);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                Integer id = result.getInt("id_instructors");
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String timeCreated = result.getString("time_created");
+
+                return new Instructor(id, firstName, lastName, timeCreated);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving instructor by ID");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Instructor updateInstructor(int id, Instructor updatedInstructor) throws SQLException {
+        try {
+            String sql = "UPDATE instructors SET first_name = ?, last_name = ? WHERE id_instructors = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, updatedInstructor.getFirstName());
+            statement.setString(2, updatedInstructor.getLastName());
+            statement.setInt(3, id);
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows > 0) {
+                return new Instructor(id, updatedInstructor.getFirstName(), updatedInstructor.getLastName(), "timestamp_placeholder");
+            } else {
+                return null; // Instructor not found
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating instructor information");
+            throw new RuntimeException(e);
+        }
     }
 }

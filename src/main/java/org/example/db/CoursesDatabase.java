@@ -142,5 +142,52 @@ public class CoursesDatabase {
         return coursesList; // Use the variable name coursesList
     }
 
-}
+    public Object getCourseByID(int id_course) {
+        try {
+            String sql = "SELECT * FROM courses WHERE id_courses = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id_course);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                id_course = result.getInt("id_courses");
+                String course_name = result.getString("course_name");
+                int id_instructor = result.getInt("id_instructor");
+                short total_time = result.getShort("total_time");
+                short credit = result.getShort("credit");
+                String time_created = result.getString("time_created");
 
+                return new Courses(id_course, course_name, time_created, id_instructor, total_time, credit);
+            } else {
+                return "Course not found ";
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving course by ID");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Courses updateCourse(int id, Courses updatedCourse) throws SQLException {
+        try {
+            String sql = "UPDATE courses SET course_name = ?, in_instructor = ?, total_time = ?, credit = ? WHERE id_courses = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, updatedCourse.getCourse_name());
+            statement.setInt(2, updatedCourse.getId_instructor());
+            statement.setShort(3, updatedCourse.getTotal_time());
+            statement.setShort(4, updatedCourse.getCredit());
+            statement.setInt(5, id);
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows > 0) {
+                return new Courses(id, updatedCourse.getCourse_name(), updatedCourse.getTime_created(), updatedCourse.getId_instructor(), updatedCourse.getTotal_time(), updatedCourse.getCredit());
+            } else {
+                return null; // Course not found
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating course information");
+            throw new RuntimeException(e);
+        }
+    }
+
+
+}
