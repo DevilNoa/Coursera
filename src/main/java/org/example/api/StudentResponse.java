@@ -54,4 +54,17 @@ public class StudentResponse {
                     .build();
         }
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteStudent(@PathParam("id") String id) {
+        boolean success = studentService.deleteStudent(id);
+        if (success) {
+            return Response.ok("Student deleted successfully").build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Student not found or delete failed")
+                    .build();
+        }
+    }
 }

@@ -191,5 +191,17 @@ public class CoursesDatabase {
         }
     }
 
+    public boolean deleteCourse(int id_courses) {
+        try {
+            String sql = "DELETE FROM courses WHERE id_courses = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id_courses);
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Error in deleting course");
+            throw new RuntimeException(e);
+        }
+    }
 
 }

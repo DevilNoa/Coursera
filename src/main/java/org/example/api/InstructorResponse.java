@@ -35,9 +35,7 @@ public class InstructorResponse {
         if (instructor != null) {
             return Response.ok(instructor).build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Instructor not found")
-                    .build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Instructor not found").build();
         }
     }
 
@@ -50,9 +48,21 @@ public class InstructorResponse {
         if (instructor != null) {
             return Response.ok(instructor).build();
         } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("Instructor not found").build();
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response removeInstructor(@PathParam("id") int id_instructors) {
+        boolean success = instructorService.deleteInstructor(id_instructors);
+        if (success) {
+            return Response.ok("Instructor removed successfully").build();
+        } else {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Instructor not found")
+                    .entity("Instructor not found or removal failed")
                     .build();
         }
     }
 }
+

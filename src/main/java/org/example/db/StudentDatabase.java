@@ -177,4 +177,19 @@ public class StudentDatabase {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean deleteStudent(String id) {
+        try {
+            String sql = "DELETE FROM students WHERE id_students = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+
+            int affectedRows = statement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Error removing student");
+            throw new RuntimeException(e);
+        }
+    }
 }

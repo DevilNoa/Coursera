@@ -37,4 +37,8 @@ public class InstructorService {
             throw new RuntimeException("Error updating instructor by ID", e);
         }
     }
+
+    public boolean deleteInstructor(int id_instructors) {
+        return instructorDatabase.deleteInstructor(id_instructors);
+    }
 }

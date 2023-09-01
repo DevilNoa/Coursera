@@ -27,7 +27,6 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<CourseraConfiguration> bootstrap) {
-        // TODO: application initialization
     }
 
     @Override
@@ -43,7 +42,6 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
         final InstructorService instructorService = new InstructorService(instructorDatabase);
 
 
-        // TODO: add others
         environment.jersey().register(new InstructorResponse(instructorService));
 
         final CoursesDatabase coursesDatabase = new CoursesDatabase(configuration.getConnection());

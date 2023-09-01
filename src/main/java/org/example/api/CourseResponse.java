@@ -52,4 +52,17 @@ public class CourseResponse {
                     .build();
         }
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteCourse(@PathParam("id") int courseId) {
+        boolean success = courseService.deleteCourse(courseId);
+        if (success) {
+            return Response.ok("Course deleted successfully").build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Course not found or deletion failed")
+                    .build();
+        }
+    }
 }

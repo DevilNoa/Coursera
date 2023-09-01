@@ -22,7 +22,7 @@ public class CourseService {
     }
 
     public Courses getCourseByID(int id_course) {
-        return (Courses) coursesDatabase.getCourseByID(id_course);
+        return coursesDatabase.getCourseByID(id_course);
     }
 
     public Courses updateCourse(int id, Courses updatedCourse) {
@@ -31,5 +31,9 @@ public class CourseService {
         } catch (SQLException e) {
             throw new RuntimeException("Error updating course by ID", e);
         }
+    }
+
+    public boolean deleteCourse(int courseId) {
+        return coursesDatabase.deleteCourse(courseId);
     }
 }

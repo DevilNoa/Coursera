@@ -38,4 +38,8 @@ public class StudentService {
             throw new RuntimeException("Error updating student ID", e);
         }
     }
+
+    public boolean deleteStudent(String id) {
+        return studentDatabase.deleteStudent(id);
+    }
 }

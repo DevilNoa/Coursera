@@ -185,4 +185,17 @@ public class InstructorDatabase {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean deleteInstructor(int id_instructors) {
+        try {
+            String sql = "DELETE FROM instructors  WHERE id_instructors = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id_instructors);
+            int affectedRows = statement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error removing instructor", e);
+        }
+    }
 }
