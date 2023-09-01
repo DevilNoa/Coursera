@@ -1,11 +1,14 @@
 package org.example.core;
 
 public class Instructor {
-    private final int id;
+    private int id;
 
-    private final String firstName;
-    private final String lastName;
-    private final String timeCreated;
+    private String firstName;
+    private String lastName;
+    private String timeCreated;
+
+    public Instructor() {
+    }
 
     public Instructor(Integer id, String firstName, String lastName, String timeCreated) {
         this.id = Integer.parseInt(String.valueOf(id));

@@ -17,7 +17,7 @@ public class CoursesDatabase {
     //creating a new course in db
     public void createCourse(int id_courses, int id_instructor, String course_name, short total_time, short credit) {
         try {
-            String sql = "INSERT INTO courses (id_courses, course_name, id_instructor, total_time, credit) VALUES (?, ?, ?,?, ?)";
+            String sql = "INSERT INTO courses (id_courses, course_name, id_instructor, total_time, credit) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id_courses);
             statement.setString(2, course_name);
@@ -26,10 +26,11 @@ public class CoursesDatabase {
             statement.setShort(5, credit);
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("error in creating course");
+            System.out.println("Error in creating course");
             throw new RuntimeException(e);
         }
     }
+
 
     //remove course by id
     public void removeCourse(int id_courses) {
@@ -125,40 +126,40 @@ public class CoursesDatabase {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
-                int id_course = result.getInt("id_courses");
+                int id_courses = result.getInt("id_courses");
                 String course_name = result.getString("course_name");
                 int id_instructor = result.getInt("id_instructor");
+                String time_created = result.getString("time_created"); // Make sure this matches the data type in your database
                 short total_time = result.getShort("total_time");
                 short credit = result.getShort("credit");
-                String time_created = result.getString("time_created");
 
-                Courses course = new Courses(id_course, course_name, time_created, id_instructor, total_time, credit); // Corrected variable order
-                coursesList.add(course); // Use the variable name coursesList
+                Courses course = new Courses(id_courses, course_name, id_instructor, time_created, total_time, credit);
+                coursesList.add(course);
             }
         } catch (SQLException e) {
             System.out.println("Error in printing Courses");
             throw new RuntimeException(e);
         }
-        return coursesList; // Use the variable name coursesList
+        return coursesList;
     }
 
-    public Object getCourseByID(int id_course) {
+    public Courses getCourseByID(int id_course) {
         try {
             String sql = "SELECT * FROM courses WHERE id_courses = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id_course);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                id_course = result.getInt("id_courses");
+                int id_courses = result.getInt("id_courses");
                 String course_name = result.getString("course_name");
                 int id_instructor = result.getInt("id_instructor");
+                String time_created = result.getString("time_created"); // Ensure this matches the data type in your database
                 short total_time = result.getShort("total_time");
                 short credit = result.getShort("credit");
-                String time_created = result.getString("time_created");
 
-                return new Courses(id_course, course_name, time_created, id_instructor, total_time, credit);
+                return new Courses(id_courses, course_name, id_instructor, time_created, total_time, credit);
             } else {
-                return "Course not found ";
+                return null; // Course not found
             }
         } catch (SQLException e) {
             System.out.println("Error retrieving course by ID");
@@ -168,7 +169,7 @@ public class CoursesDatabase {
 
     public Courses updateCourse(int id, Courses updatedCourse) throws SQLException {
         try {
-            String sql = "UPDATE courses SET course_name = ?, in_instructor = ?, total_time = ?, credit = ? WHERE id_courses = ?";
+            String sql = "UPDATE courses SET course_name = ?, id_instructor = ?, total_time = ?, credit = ? WHERE id_courses = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, updatedCourse.getCourse_name());
             statement.setInt(2, updatedCourse.getId_instructor());
@@ -179,7 +180,8 @@ public class CoursesDatabase {
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows > 0) {
-                return new Courses(id, updatedCourse.getCourse_name(), updatedCourse.getTime_created(), updatedCourse.getId_instructor(), updatedCourse.getTotal_time(), updatedCourse.getCredit());
+                // Use the updated values for id_courses and time_created
+                return new Courses(id, updatedCourse.getCourse_name(), updatedCourse.getId_instructor(), updatedCourse.getTime_created(), updatedCourse.getTotal_time(), updatedCourse.getCredit());
             } else {
                 return null; // Course not found
             }

@@ -18,7 +18,7 @@ public class CourseService {
     }
 
     public void addCourse(Courses newCourse) {
-        coursesDatabase.createCourse(newCourse.getId_course(), newCourse.getId_instructor(), newCourse.getCourse_name(), newCourse.getTotal_time(), newCourse.getCredit());
+        coursesDatabase.createCourse(newCourse.getId_courses(), newCourse.getId_instructor(), newCourse.getCourse_name(), newCourse.getTotal_time(), newCourse.getCredit());
     }
 
     public Courses getCourseByID(int id_course) {
