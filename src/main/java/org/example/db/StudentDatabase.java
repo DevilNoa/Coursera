@@ -26,7 +26,7 @@ public class StudentDatabase {
                 String id = result.getString("id_students");
                 String firstName = result.getString("first_name");
                 String lastName = result.getString("last_name");
-                String timeCreated = result.getString("time_create");
+                String timeCreated = result.getString("time_created");
 
                 System.out.printf("%s-%s-%s-%s-\n", id, firstName, lastName, timeCreated);
             }
@@ -103,7 +103,7 @@ public class StudentDatabase {
                 String id = result.getString("id_students");
                 String firstName = result.getString("first_name");
                 String lastName = result.getString("last_name");
-                String timeCreated = result.getString("time_create");
+                String timeCreated = result.getString("time_created");
 
                 System.out.printf("%s-%s-%s-%s-\n", id, firstName, lastName, timeCreated);
             } else {
@@ -126,7 +126,7 @@ public class StudentDatabase {
                 String id = result.getString("id_students");
                 String firstName = result.getString("first_name");
                 String lastName = result.getString("last_name");
-                String timeCreated = result.getString("time_create");
+                String timeCreated = result.getString("time_created");
 
                 Student student = new Student(id, firstName, lastName, timeCreated);
                 students.add(student);
@@ -151,7 +151,7 @@ public class StudentDatabase {
                 String id = result.getString("id_students");
                 String firstName = result.getString("first_name");
                 String lastName = result.getString("last_name");
-                String timeCreated = result.getString("time_create");
+                String timeCreated = result.getString("time_created");
 
                 return new Student(id, firstName, lastName, timeCreated);
             } else {

@@ -17,7 +17,7 @@ public class CoursesDatabase {
     //creating a new course in db
     public void createCourse(int id_courses, int id_instructor, String course_name, short total_time, short credit) {
         try {
-            String sql = "INSERT INTO courses (id_courses, course_name, id_instructor, total_time, credit) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO courses (id_courses, course_name, id_instructor, total_time, credits) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id_courses);
             statement.setString(2, course_name);
@@ -53,7 +53,7 @@ public class CoursesDatabase {
     //modify course by id
     public void courseAlter(int id_courses, String newCourseName, short newTotalTime, short newCredit) {
         try {
-            String sql = "UPDATE courses SET course_name = ?, total_time = ?, credit = ? WHERE id_courses = ?";
+            String sql = "UPDATE courses SET course_name = ?, total_time = ?, credits = ? WHERE id_courses = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, newCourseName);
             statement.setShort(2, newTotalTime);
@@ -83,7 +83,7 @@ public class CoursesDatabase {
                 String course_name = result.getString("course_name");
                 String id_instructor = result.getString("id_instructor");
                 String total_time = result.getString("total_time");
-                String credit = result.getString("credit");
+                String credit = result.getString("credits");
                 String time_created = result.getString("time_created");
 
                 System.out.printf("%s %s %s %s %s %s \n", id_course, course_name, id_instructor, total_time, credit, time_created);
@@ -107,7 +107,7 @@ public class CoursesDatabase {
                 String course_name = result.getString("course_name");
                 String id_instructor = result.getString("id_instructor");
                 String total_time = result.getString("total_time");
-                String credit = result.getString("credit");
+                String credit = result.getString("credits");
                 String time_created = result.getString("time_created");
 
                 System.out.printf("%s %s %s %s %s %s \n", id_course, course_name, id_instructor, total_time, credit, time_created);
@@ -131,7 +131,7 @@ public class CoursesDatabase {
                 int id_instructor = result.getInt("id_instructor");
                 String time_created = result.getString("time_created"); // Make sure this matches the data type in your database
                 short total_time = result.getShort("total_time");
-                short credit = result.getShort("credit");
+                short credit = result.getShort("credits");
 
                 Courses course = new Courses(id_courses, course_name, id_instructor, time_created, total_time, credit);
                 coursesList.add(course);
@@ -155,7 +155,7 @@ public class CoursesDatabase {
                 int id_instructor = result.getInt("id_instructor");
                 String time_created = result.getString("time_created"); // Ensure this matches the data type in your database
                 short total_time = result.getShort("total_time");
-                short credit = result.getShort("credit");
+                short credit = result.getShort("credits");
 
                 return new Courses(id_courses, course_name, id_instructor, time_created, total_time, credit);
             } else {
@@ -169,7 +169,7 @@ public class CoursesDatabase {
 
     public Courses updateCourse(int id, Courses updatedCourse) throws SQLException {
         try {
-            String sql = "UPDATE courses SET course_name = ?, id_instructor = ?, total_time = ?, credit = ? WHERE id_courses = ?";
+            String sql = "UPDATE courses SET course_name = ?, id_instructor = ?, total_time = ?, credits = ? WHERE id_courses = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, updatedCourse.getCourse_name());
             statement.setInt(2, updatedCourse.getId_instructor());
