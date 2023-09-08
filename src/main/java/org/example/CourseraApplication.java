@@ -6,9 +6,11 @@ import io.dropwizard.core.setup.Environment;
 import org.example.api.CourseResponse;
 import org.example.api.InstructorResponse;
 import org.example.api.StudentResponse;
+import org.example.config.JwtConfiguration;
 import org.example.db.CoursesDatabase;
 import org.example.db.InstructorDatabase;
 import org.example.db.StudentDatabase;
+import org.example.security.JwtAuthenticationFilter;
 import org.example.services.CourseService;
 import org.example.services.InstructorService;
 import org.example.services.StudentService;
@@ -31,6 +33,11 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
 
     @Override
     public void run(final CourseraConfiguration configuration, final Environment environment) {
+
+        final JwtConfiguration jwtConfig = configuration.getJwtConfiguration();
+        final JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(jwtConfig.getSecretKey());
+        environment.jersey().register(jwtFilter);
+
 
         final StudentDatabase studentDatabase = new StudentDatabase(configuration.getConnection());
         final StudentService studentService = new StudentService(studentDatabase);
