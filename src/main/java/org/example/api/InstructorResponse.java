@@ -1,9 +1,11 @@
 package org.example.api;
 
+import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.example.core.Instructor;
+import org.example.core.User;
 import org.example.services.InstructorService;
 
 @Path("/instructors")
@@ -62,6 +64,17 @@ public class InstructorResponse {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("Instructor not found or removal failed")
                     .build();
+        }
+    }
+
+    @GET
+    @Path("/get-all-instructors-with-login")
+    public String getAllInstructors(@Auth User authenticatedUser) {
+
+        if (authenticatedUser != null) {
+            return instructorService.getAllInstructorsASList().toString();
+        } else {
+            return "Unauthorized";
         }
     }
 }

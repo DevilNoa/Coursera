@@ -7,13 +7,16 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.example.core.User;
+import org.example.core.UserRegistrationRequest;
+import org.example.security.PasswordHashingUtil;
 import org.example.services.JwtService;
 import org.example.services.UserService;
 
 import java.sql.SQLException;
 
-@Path("/auth")
+@Path("/user")
 public class UserResponse {
+    UserRegistrationRequest userRegistrationRequest;
     private final UserService userService;
 
     public UserResponse(UserService userService) {
@@ -39,10 +42,13 @@ public class UserResponse {
         try {
             String storedPasswordHash = userService.getPasswordHash(username);
             String salt = userService.getSalt(username);
-            String hashedPassword = hashPassword(password, salt);
+
+            // Hash the user's input password using your utility method
+            String hashedPassword = PasswordHashingUtil.hashPassword(password, salt);
 
             return storedPasswordHash.equals(hashedPassword);
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -51,5 +57,24 @@ public class UserResponse {
 
         return password;
     }
-}
 
+    @POST
+    @Path("/register")
+    public Response registerUser(UserRegistrationRequest request) {
+        String username = request.getUsername();
+        String password = request.getPassword();
+        String email = request.getEmail();
+
+        String salt = PasswordHashingUtil.generateSalt();
+
+        String hashedPassword = PasswordHashingUtil.hashPassword(password, salt);
+
+        boolean success = userService.createUser(username, hashedPassword, salt, email);
+
+        if (success) {
+            return Response.status(Response.Status.CREATED).build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+}

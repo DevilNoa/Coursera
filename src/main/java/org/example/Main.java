@@ -1,7 +1,5 @@
 package org.example;
 
-import org.example.security.PasswordHashingUtil;
-
 //
 //import org.example.db.CoursesDatabase;
 //import org.example.db.InstructorDatabase;
@@ -94,21 +92,21 @@ import org.example.security.PasswordHashingUtil;
 //        coursesDatabase.printAllCourses();
 //    }
 //}
-public class Main {
-    public static void main(String[] args) {
-        String password = "userPasswordd"; // The user's password
-
-        // Hash the password when registering a user
-        String hashedPassword = PasswordHashingUtil.hashPassword(password);
-
-        // Verify the password during login
-        boolean isPasswordCorrect = PasswordHashingUtil.verifyPassword(password, hashedPassword);
-
-        if (isPasswordCorrect) {
-            System.out.println("Password is correct!");
-        } else {
-            System.out.println("Password is incorrect.");
-        }
-    }
-
-}
+//public class Main {
+//    public static void main(String[] args) {
+//        String password = "userPasswordd"; // The user's password
+//
+//        // Hash the password when registering a user
+//        String hashedPassword = PasswordHashingUtil.hashPassword(password);
+//
+//        // Verify the password during login
+//        boolean isPasswordCorrect = PasswordHashingUtil.verifyPassword(password, hashedPassword);
+//
+//        if (isPasswordCorrect) {
+//            System.out.println("Password is correct!");
+//        } else {
+//            System.out.println("Password is incorrect.");
+//        }
+//    }
+//
+//}

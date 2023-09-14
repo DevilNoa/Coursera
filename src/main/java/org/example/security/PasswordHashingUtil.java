@@ -3,7 +3,9 @@ package org.example.security;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
@@ -12,26 +14,35 @@ public class PasswordHashingUtil {
     private static final int ITERATIONS = 10000; // Number of iterations for the PBKDF2 algorithm
     private static final int KEY_LENGTH = 256; // Length of the derived key in bits
 
-    public static String hashPassword(String password) {
-        // Generate a random salt
-        byte[] salt = generateSalt();
+    public static String hashPassword(String password, String salt) {
+        int iterations = 10000; // Number of iterations
+        int keyLength = 256;    // Key length in bits
 
-        // Hash the password with the salt
-        byte[] hashedPassword = hashWithPBKDF2(password.toCharArray(), salt);
+        char[] passwordChars = password.toCharArray();
+        byte[] saltBytes = Base64.getDecoder().decode(salt);
 
-        // Combine the salt and hashed password and encode them as Base64
-        String saltBase64 = Base64.getEncoder().encodeToString(salt);
-        String hashedPasswordBase64 = Base64.getEncoder().encodeToString(hashedPassword);
+        PBEKeySpec spec = new PBEKeySpec(passwordChars, saltBytes, iterations, keyLength);
 
-        // Store the salt and hashed password together (e.g., "salt:hashedPassword")
-        return saltBase64 + ":" + hashedPasswordBase64;
+        try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            byte[] hashedPassword = factory.generateSecret(spec).getEncoded();
+            byte[] combined = new byte[saltBytes.length + hashedPassword.length];
+            System.arraycopy(saltBytes, 0, combined, 0, saltBytes.length);
+            System.arraycopy(hashedPassword, 0, combined, saltBytes.length, hashedPassword.length);
+
+            // Encode the combined byte array as Base64
+            return Base64.getEncoder().encodeToString(combined);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            // Handle exceptions (e.g., log the error)
+            return null;
+        }
     }
 
-    private static byte[] generateSalt() {
+    public static String generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_LENGTH];
         random.nextBytes(salt);
-        return salt;
+        return Base64.getEncoder().encodeToString(salt);
     }
 
     public static byte[] hashWithPBKDF2(char[] password, byte[] salt) {
@@ -58,4 +69,5 @@ public class PasswordHashingUtil {
         byte[] hashedPasswordToCheck = hashWithPBKDF2(password.toCharArray(), salt);
         return MessageDigest.isEqual(storedHash, hashedPasswordToCheck);
     }
+
 }

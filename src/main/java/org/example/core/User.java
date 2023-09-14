@@ -63,9 +63,9 @@ public class User {
         this.timeCreated = timeCreated;
     }
 
-    public class LoginRequest {
-        private String username;
-        private String password;
+    public static class LoginRequest {
+        private final String username;
+        private final String password;
 
         public String getUsername() {
             return username;

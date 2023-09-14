@@ -1,9 +1,11 @@
 package org.example.api;
 
+import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.example.core.Courses;
+import org.example.core.User;
 import org.example.services.CourseService;
 
 @Path("/courses")
@@ -63,6 +65,18 @@ public class CourseResponse {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("Course not found or deletion failed")
                     .build();
+        }
+    }
+
+    @GET
+    @Path("/all-courses-with-login")
+    public String getAllCoursesAsList(@Auth User authenticatedUser) {
+
+        if (authenticatedUser != null) {
+            return courseService.getAllCoursesASList().toString();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").build().toString();
+
         }
     }
 }

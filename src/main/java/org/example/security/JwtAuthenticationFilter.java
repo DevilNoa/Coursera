@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 @Provider
 public class JwtAuthenticationFilter implements ContainerRequestFilter {
@@ -20,6 +21,13 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
+        // Check if the request is coming from localhost
+        String remoteAddress = requestContext.getHeaders().getFirst("X-Forwarded-For");
+        if (remoteAddress == null || InetAddress.getByName(remoteAddress).isLoopbackAddress()) {
+            // Request is from localhost, no authentication needed
+            return;
+        }
+
         String token = extractTokenFromHeader(requestContext.getHeaderString("Authorization"));
 
         try {
@@ -27,7 +35,6 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token)
                     .getBody();
-
 
             String userId = claims.getSubject();
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
