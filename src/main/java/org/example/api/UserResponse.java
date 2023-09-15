@@ -16,13 +16,14 @@ import java.sql.SQLException;
 
 @Path("/user")
 public class UserResponse {
-    UserRegistrationRequest userRegistrationRequest;
     private final UserService userService;
+    UserRegistrationRequest userRegistrationRequest;
 
     public UserResponse(UserService userService) {
         this.userService = userService;
     }
 
+    // Endpoint for user authentication
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -30,14 +31,18 @@ public class UserResponse {
     public Response authenticateUser(User.LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
+        // Check if the provided username and password are valid
         if (isValidUser(username, password)) {
+            // Generate a JWT token for the authenticated user
             String token = JwtService.generateToken(username);
             return Response.ok(new TokenResponse(token)).build();
         } else {
+            // Return unauthorized status if authentication fail
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
 
+    // Helper method to validate user credentials
     private boolean isValidUser(String username, String password) {
         try {
             String storedPasswordHash = userService.getPasswordHash(username);
@@ -65,15 +70,20 @@ public class UserResponse {
         String password = request.getPassword();
         String email = request.getEmail();
 
+        // Generate a random salt for password hashing
         String salt = PasswordHashingUtil.generateSalt();
 
+        // Hash the user's password using the generated salt
         String hashedPassword = PasswordHashingUtil.hashPassword(password, salt);
 
+        // Create a new user with the hashed password and salt
         boolean success = userService.createUser(username, hashedPassword, salt, email);
 
         if (success) {
+            // Return a success response if user registration is successful
             return Response.status(Response.Status.CREATED).build();
         } else {
+            // Return an internal server error response if registration fails
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

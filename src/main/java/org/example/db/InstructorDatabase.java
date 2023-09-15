@@ -14,7 +14,7 @@ public class InstructorDatabase {
     }
 
 
-    //creating and instructor in the db
+    //Method to create an instructor in the db
     public void createInstructor(Integer id_instructors, String firstName, String lastName) {
         try {
             String sql = "INSERT INTO instructors (id_instructors, first_name, last_name) VALUES (?, ?, ?)";
@@ -30,7 +30,7 @@ public class InstructorDatabase {
     }
 
 
-    //removing instructor by id
+    // Method to remove an instructor from the database by ID with output to the console
     public void removeInstructor(Integer id_instructors) {
         try {
             String sql = "DELETE FROM instructors  WHERE id_instructors = ?";
@@ -48,7 +48,7 @@ public class InstructorDatabase {
         }
     }
 
-    //modify instructor by id
+    //Method to modify an instructor's information by ID with output to the console
     public void instructorAlter(Integer id_instructors, String newFirstName, String newLastName) {
         try {
             String sql = "UPDATE instructors SET first_name = ?, last_name = ? WHERE id_instructors = ?";
@@ -68,8 +68,7 @@ public class InstructorDatabase {
         }
     }
 
-    //print instructor by id
-
+    //Method to print an instructor by ID with output to the console
     public void printInstructorByID(Integer id_instructors) {
         try {
             String sql = "SELECT * FROM instructors WHERE id_instructors = ?";
@@ -94,7 +93,7 @@ public class InstructorDatabase {
     }
 
 
-    //printing the list of the instructors
+    //Method to print an instructor by ID with output to the console
     public void printAllInstructors() {
         try {
             String sql = "SELECT * FROM instructors";
@@ -116,7 +115,7 @@ public class InstructorDatabase {
 
     }
 
-    //using get request printing all instructors
+    //Method to print a list of all instructors
     public List<Instructor> getAllInstructorsAsList() {
         List<Instructor> instructors = new ArrayList<>();
         try {
@@ -130,7 +129,7 @@ public class InstructorDatabase {
                 String lastName = result.getString("last_name");
                 String timeCreated = result.getString("time_created"); // Fetch the time_created column
 
-                // Create a new Instructor object and add it to the list
+                //Create a new Instructor object and add it to the list
                 Instructor instructor = new Instructor(id, firstName, lastName, timeCreated);
                 instructors.add(instructor);
             }
@@ -142,7 +141,7 @@ public class InstructorDatabase {
         return instructors;
     }
 
-    //using get request printing an instructor by id
+    //Method to retrieve an instructor by ID
     public Instructor getInstructorByID(int id_instructors) throws SQLException {
         try {
             String sql = "SELECT * FROM instructors WHERE id_instructors = ?";
@@ -166,6 +165,7 @@ public class InstructorDatabase {
         }
     }
 
+    // Method to update instructor by ID
     public Instructor updateInstructor(int id, Instructor updatedInstructor) throws SQLException {
         try {
             String sql = "UPDATE instructors SET first_name = ?, last_name = ? WHERE id_instructors = ?";
@@ -186,6 +186,7 @@ public class InstructorDatabase {
         }
     }
 
+    //Method to delete instructor by ID
     public boolean deleteInstructor(int id_instructors) {
         try {
             String sql = "DELETE FROM instructors  WHERE id_instructors = ?";

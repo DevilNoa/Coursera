@@ -18,17 +18,20 @@ public class InstructorResponse {
         this.instructorService = instructorService;
     }
 
+    // Endpoint to get all instructors
     @GET
     public String getAllInstructors() {
         return instructorService.getAllInstructorsASList().toString();
     }
 
+    // Endpoint to add a new instructor
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addInstructor(Instructor newInstructor) {
         instructorService.addInstructor(newInstructor);
     }
 
+    // Endpoint to get an instructor by ID
     @GET
     @Path("/{id}")
     public Response getInstructorByID(@PathParam("id") int id) {
@@ -41,6 +44,7 @@ public class InstructorResponse {
         }
     }
 
+    // Endpoint to update an instructor by ID
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -54,6 +58,7 @@ public class InstructorResponse {
         }
     }
 
+    // Endpoint to remove an instructor by ID
     @DELETE
     @Path("/{id}")
     public Response removeInstructor(@PathParam("id") int id_instructors) {
@@ -67,6 +72,7 @@ public class InstructorResponse {
         }
     }
 
+    // Endpoint to get all instructors with authentication
     @GET
     @Path("/get-all-instructors-with-login")
     public String getAllInstructors(@Auth User authenticatedUser) {

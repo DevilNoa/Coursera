@@ -15,6 +15,7 @@ public class StudentResponse {
 
     private final StudentService studentService;
 
+
     public StudentResponse(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -79,34 +80,21 @@ public class StudentResponse {
         }
     }
 
+    //why why not worki work
 //    @PUT
-//    @Path("/update-student-with-login/{id}")
+//    @Path("/update-student-with-login")
 //    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response updateStudentWithLogin(
-//            @PathParam("id") String id,
-//            @Auth User authenticatedUser, // Ensure that @Auth is correctly set up
-//            Student updatedStudent
-//    ) {
-//        // Check if the authenticated user is authorized to perform the update
-//        if (authenticatedUser != null && isAuthenticatedUserAuthorized(authenticatedUser)) {
+//    public Response updateStudentWithLogin(@Auth User authenticatedUser, Student updatedStudent) {
+//        if (authenticatedUser != null) {
+//            String id = updatedStudent.getId(); // Extract the ID from the updatedStudent object
 //            boolean success = studentService.updateStudent(id, updatedStudent);
 //            if (success) {
 //                return Response.ok("Student updated successfully").build();
 //            } else {
-//                return Response.status(Response.Status.NOT_FOUND)
-//                        .entity("Student not found or update failed")
-//                        .build();
+//                return Response.status(Response.Status.NOT_FOUND).entity("Student not found or update failed").build();
 //            }
 //        } else {
 //            return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").build();
 //        }
 //    }
-//
-//    private boolean isAuthenticatedUserAuthorized(User authenticatedUser) {
-//        if (authenticatedUser != null) {
-//            return true;
-//        }
-//        return false;
-//    }
-
 }

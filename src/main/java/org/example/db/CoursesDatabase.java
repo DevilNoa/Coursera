@@ -14,7 +14,7 @@ public class CoursesDatabase {
         this.connection = connection;
     }
 
-    //creating a new course in db
+    //Method to create a new course in the db
     public void createCourse(int id_courses, int id_instructor, String course_name, short total_time, short credit) {
         try {
             String sql = "INSERT INTO courses (id_courses, course_name, id_instructor, total_time, credits) VALUES (?, ?, ?, ?, ?)";
@@ -32,7 +32,7 @@ public class CoursesDatabase {
     }
 
 
-    //remove course by id
+    // Method to remove a course from the database by ID with output to the console
     public void removeCourse(int id_courses) {
         try {
             String sql = "DELETE FROM public.courses WHERE id_courses = ?";
@@ -50,7 +50,7 @@ public class CoursesDatabase {
         }
     }
 
-    //modify course by id
+    //Method to modify a course's information by ID with output to the console
     public void courseAlter(int id_courses, String newCourseName, short newTotalTime, short newCredit) {
         try {
             String sql = "UPDATE courses SET course_name = ?, total_time = ?, credits = ? WHERE id_courses = ?";
@@ -72,7 +72,7 @@ public class CoursesDatabase {
     }
 
 
-    //printing courses
+    //Method to print  a courses by ID with output to the console
     public void printAllCourses() {
         try {
             String sql = "SELECT * from courses";
@@ -95,7 +95,7 @@ public class CoursesDatabase {
         }
     }
 
-    //print course by id
+    //Method to print a courses by ID with output to the console
     public void printCourseByID(int id_courses) {
         try {
             String sql = "SELECT * from courses where id_courses = ?";
@@ -119,6 +119,7 @@ public class CoursesDatabase {
         }
     }
 
+    //Method to print a list of all courses
     public List<Courses> getAllCoursesAsList() {
         List<Courses> coursesList = new ArrayList<>();
         try {
@@ -133,6 +134,7 @@ public class CoursesDatabase {
                 short total_time = result.getShort("total_time");
                 short credit = result.getShort("credits");
 
+                //Creating a course object and add it to the list
                 Courses course = new Courses(id_courses, course_name, id_instructor, time_created, total_time, credit);
                 coursesList.add(course);
             }
@@ -143,6 +145,7 @@ public class CoursesDatabase {
         return coursesList;
     }
 
+    //Method to retrieve a course by ID
     public Courses getCourseByID(int id_course) {
         try {
             String sql = "SELECT * FROM courses WHERE id_courses = ?";
@@ -167,6 +170,7 @@ public class CoursesDatabase {
         }
     }
 
+    // Method to update course by ID
     public Courses updateCourse(int id, Courses updatedCourse) throws SQLException {
         try {
             String sql = "UPDATE courses SET course_name = ?, id_instructor = ?, total_time = ?, credits = ? WHERE id_courses = ?";
@@ -191,6 +195,7 @@ public class CoursesDatabase {
         }
     }
 
+    //Method to delete course by ID
     public boolean deleteCourse(int id_courses) {
         try {
             String sql = "DELETE FROM courses WHERE id_courses = ?";

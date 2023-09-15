@@ -18,17 +18,20 @@ public class CourseResponse {
         this.courseService = courseDatabase;
     }
 
+    // Endpoint to get all courses as a list
     @GET
     public String getAllCoursesAsList() {
         return courseService.getAllCoursesASList().toString();
     }
 
+    // Endpoint to add a new course
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void addCourse(Courses newCourse) {
         courseService.addCourse(newCourse);
     }
 
+    // Endpoint to get a course by ID
     @GET
     @Path("/{id}")
     public String getCourseById(@PathParam("id") int courseId) {
@@ -40,6 +43,7 @@ public class CourseResponse {
         }
     }
 
+    // Endpoint to update a course by ID
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -55,6 +59,7 @@ public class CourseResponse {
         }
     }
 
+    // Endpoint to delete a course by ID
     @DELETE
     @Path("/{id}")
     public Response deleteCourse(@PathParam("id") int courseId) {
@@ -68,6 +73,7 @@ public class CourseResponse {
         }
     }
 
+    // Endpoint to get all courses with authentication
     @GET
     @Path("/all-courses-with-login")
     public String getAllCoursesAsList(@Auth User authenticatedUser) {

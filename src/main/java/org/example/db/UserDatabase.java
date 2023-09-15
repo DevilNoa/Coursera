@@ -19,6 +19,7 @@ public class UserDatabase {
         this.connection = connection;
     }
 
+    //method for creating a user in the db
     public boolean createUser(String username, String hashedPassword, String salt, String email) {
         String sql = "INSERT INTO users (username, password_hash, salt, email) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -28,6 +29,7 @@ public class UserDatabase {
             statement.setString(2, hashedPassword);
             statement.setString(3, salt);
             statement.setString(4, email);
+
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
@@ -36,6 +38,7 @@ public class UserDatabase {
         }
     }
 
+    //Method to retrieve password hash from user
     public String getPasswordHash(String username) throws SQLException {
         String sql = "SELECT password_hash FROM users WHERE username = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -49,6 +52,7 @@ public class UserDatabase {
         return null;
     }
 
+    //Method to retrieve salt hash from user
     public String getSalt(String username) throws SQLException {
         String sql = "SELECT salt FROM users WHERE username = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -62,6 +66,7 @@ public class UserDatabase {
         return null;
     }
 
+    // Method to verify a password by comparing it with the stored hashed password
     public boolean verifyPassword(String username, String password) throws SQLException {
         String storedHashedPassword = getHashedPasswordByUsername(username);
 
@@ -82,11 +87,10 @@ public class UserDatabase {
         byte[] hashedPasswordBytes = Base64.getDecoder().decode(hashedPassword);
 
         // Verify the password using PBKDF2
-        boolean passwordVerified = verifyPasswordPBKDF2(password, saltBytes, hashedPasswordBytes, iterations);
-
-        return passwordVerified;
+        return verifyPasswordPBKDF2(password, saltBytes, hashedPasswordBytes, iterations);
     }
 
+    // Method to verify a password using PBKDF2 with HMAC-SHA256
     private boolean verifyPasswordPBKDF2(String password, byte[] salt, byte[] hashedPassword, int iterations) {
         char[] passwordChars = password.toCharArray();
         PBEKeySpec spec = new PBEKeySpec(passwordChars, salt, iterations, hashedPassword.length * 8);
@@ -103,7 +107,7 @@ public class UserDatabase {
         }
     }
 
-
+    // Method to retrieve the hashed password from the database by username
     public String getHashedPasswordByUsername(String username) throws SQLException {
         String sql = "SELECT password_hash FROM users WHERE username = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {

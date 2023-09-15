@@ -36,26 +36,30 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
 
     @Override
     public void run(final CourseraConfiguration configuration, final Environment environment) {
-
+        //JWT configuration for the application
         final JwtConfiguration jwtConfig = configuration.getJwtConfiguration();
+        //JWT authentication filter for the program
         final JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(jwtConfig.getSecretKey());
         environment.jersey().register(jwtFilter);
 
+        //Creating an API endpoints for the program and resources responsible for handling HTTP requests
+
+        //Student endpoint
         final StudentDatabase studentDatabase = new StudentDatabase(configuration.getConnection());
         final StudentService studentService = new StudentService(studentDatabase);
-
         environment.jersey().register(new StudentResponse(studentService));
 
+        //Instructor endpoint
         final InstructorDatabase instructorDatabase = new InstructorDatabase(configuration.getConnection());
         final InstructorService instructorService = new InstructorService(instructorDatabase);
-
         environment.jersey().register(new InstructorResponse(instructorService));
 
+        //Courses endpoint
         final CoursesDatabase coursesDatabase = new CoursesDatabase(configuration.getConnection());
         final CourseService courseService = new CourseService(coursesDatabase);
-
         environment.jersey().register(new CourseResponse(courseService));
 
+        //User endpoint
         final UserDatabase userDatabase = new UserDatabase(configuration.getConnection());
         final UserService userService = new UserService(userDatabase);
         environment.jersey().register(new UserResponse(userService));

@@ -9,22 +9,27 @@ import java.util.List;
 public class CourseService {
     CoursesDatabase coursesDatabase;
 
+    //Constructor to initialize CourseService with CoursesDatabase instance
     public CourseService(CoursesDatabase coursesDatabase) {
         this.coursesDatabase = coursesDatabase;
     }
 
+    //Method for retrieving all the courses as a list form the db
     public List<Courses> getAllCoursesASList() {
         return coursesDatabase.getAllCoursesAsList();
     }
 
+    //Method to add a new course to the db
     public void addCourse(Courses newCourse) {
         coursesDatabase.createCourse(newCourse.getId_courses(), newCourse.getId_instructor(), newCourse.getCourse_name(), newCourse.getTotal_time(), newCourse.getCredit());
     }
 
+    //Method to retrieve course by ID
     public Courses getCourseByID(int id_course) {
         return coursesDatabase.getCourseByID(id_course);
     }
 
+    //Method to update a course by ID
     public Courses updateCourse(int id, Courses updatedCourse) {
         try {
             return coursesDatabase.updateCourse(id, updatedCourse);
@@ -33,6 +38,7 @@ public class CourseService {
         }
     }
 
+    //Method to delete course by ID
     public boolean deleteCourse(int courseId) {
         return coursesDatabase.deleteCourse(courseId);
     }

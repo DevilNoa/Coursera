@@ -3,6 +3,11 @@ logging:
   level: INFO
   loggers:
     org.example: DEBUG
+
 jwtConfiguration:
   secretKey: your-secret-key
   tokenExpirationMinutes: 60
+
+#jersey:
+#  packages:
+#    - org.example.api

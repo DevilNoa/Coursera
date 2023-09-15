@@ -10,19 +10,22 @@ import java.util.List;
 public class StudentService {
     StudentDatabase studentDatabase;
 
+    //Constructor to initialize StudentService with StudentDatabase instance
     public StudentService(StudentDatabase studentDatabase) {
         this.studentDatabase = studentDatabase;
     }
 
-
+    //Method for retrieving all tje students as a list form the db
     public List<Student> getAllStudentsAsList() {
         return studentDatabase.getAllStudentsAsList();
     }
 
+    //Method to add a new student to the db
     public void addStudent(Student newStudent) {
         studentDatabase.createStudent(newStudent.getId(), newStudent.getFirstName(), newStudent.getLastName());
     }
 
+    //Method to retrieve a student by ID
     public Student getStudentByID(String id) {
         try {
             return studentDatabase.getStudentByID(id);
@@ -31,6 +34,7 @@ public class StudentService {
         }
     }
 
+    //Method to update a student by ID
     public boolean updateStudent(String id, Student updateStudent) {
         try {
             return studentDatabase.updateStudent(id, updateStudent);
@@ -39,6 +43,7 @@ public class StudentService {
         }
     }
 
+    //Method to delete student by ID
     public boolean deleteStudent(String id) {
         return studentDatabase.deleteStudent(id);
     }

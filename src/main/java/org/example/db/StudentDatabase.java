@@ -15,7 +15,22 @@ public class StudentDatabase {
     }
 
 
-    //print all students
+    //creating a new student inside the db
+    public void createStudent(String id_students, String firstName, String lastName) {
+        try {
+            String sql = "INSERT INTO students (id_students, first_name, last_name) VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id_students);
+            statement.setString(2, firstName);
+            statement.setString(3, lastName);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error creating student");
+            throw new RuntimeException(e);
+        }
+    }
+
+    //print all students from the db to the console
     public void printAllStudents() {
         try {
             String sql = "SELECT * FROM students";
@@ -36,22 +51,7 @@ public class StudentDatabase {
         }
     }
 
-    //creating a new student
-    public void createStudent(String id_students, String firstName, String lastName) {
-        try {
-            String sql = "INSERT INTO students (id_students, first_name, last_name) VALUES (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, id_students);
-            statement.setString(2, firstName);
-            statement.setString(3, lastName);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error creating student");
-            throw new RuntimeException(e);
-        }
-    }
-
-    //removing a student
+    //removing a student from the db with output to the console
     public void removeStudent(String id_students) {
         try {
             String sql = "DELETE FROM students WHERE id_students = ?";
@@ -70,7 +70,7 @@ public class StudentDatabase {
         }
     }
 
-    //changing the info for the student by id
+    //changing the info for the student by id from the db and printing inside the console
     public void studentAlter(String id_students, String newFirstName, String newLastName) {
         try {
             String sql = "UPDATE students SET first_name = ?, last_name = ? WHERE id_students = ?";
@@ -91,7 +91,7 @@ public class StudentDatabase {
     }
 
 
-    //print student by id
+    //print student by id from the db to the console
     public void printStudentByID(String id_students) {
         try {
             String sql = "SELECT * FROM students WHERE id_students = ?";
@@ -115,6 +115,7 @@ public class StudentDatabase {
         }
     }
 
+    //Method to get a list of students
     public List<Student> getAllStudentsAsList() {
         List<Student> students = new ArrayList<>();
         try {
@@ -139,7 +140,7 @@ public class StudentDatabase {
         return students;
     }
 
-    //using get request printing student by id
+    //Method to get a student by id
     public Student getStudentByID(String id_students) throws SQLException {
         try {
             String sql = "SELECT * FROM students WHERE id_students = ?";
@@ -163,6 +164,7 @@ public class StudentDatabase {
         }
     }
 
+    // Method to update a student's information
     public boolean updateStudent(String id, Student updatedStudent) throws SQLException {
         try {
             String sql = "UPDATE students SET first_name = ?, last_name = ? WHERE id_students = ?";
@@ -178,6 +180,7 @@ public class StudentDatabase {
         }
     }
 
+    // Method to delete a student by ID
     public boolean deleteStudent(String id) {
         try {
             String sql = "DELETE FROM students WHERE id_students = ?";

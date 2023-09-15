@@ -28,21 +28,29 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
             return;
         }
 
+        // Extract the JWT token from the Authorization header
         String token = extractTokenFromHeader(requestContext.getHeaderString("Authorization"));
 
         try {
+            // Parse and verify the JWT token
             Claims claims = Jwts.parser()
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token)
                     .getBody();
 
+            // Extract user information from the token, if needed
             String userId = claims.getSubject();
-        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
 
+        } catch (ExpiredJwtException | UnsupportedJwtException |
+                 MalformedJwtException e)// Haling exceptions related to token validation
+        {
+
+            //Responding with UNAUTHORIZED status code
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }
     }
 
+    // Helper method to extract the token from the Authorization header
     private String extractTokenFromHeader(String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
             return authorizationHeader.substring("Bearer".length()).trim();
