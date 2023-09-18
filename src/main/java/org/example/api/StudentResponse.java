@@ -70,12 +70,12 @@ public class StudentResponse {
 
     @GET
     @Path("/get-all-students-with-login")
-    public String getAllStudents(@Auth User authenticatedUser) {
+    public Response getAllStudents(@Auth User authenticatedUser) {
 
         if (authenticatedUser != null) {
-            return studentService.getAllStudentsAsList().toString();
+            return Response.ok(studentService.getAllStudentsAsList()).build();
         } else {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").build().toString();
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").build();
 
         }
     }
