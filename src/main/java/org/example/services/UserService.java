@@ -3,6 +3,7 @@ package org.example.services;
 import org.example.db.UserDatabase;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 public class UserService {
     private final UserDatabase userDatabase;
@@ -13,8 +14,9 @@ public class UserService {
     }
 
     //Method for the creation a new user in the db
-    public boolean createUser(String username, String hashedPassword, String salt, String email) {
-        return userDatabase.createUser(username, hashedPassword, salt, email);
+    public boolean createUser(String username, String hashedPassword, String salt, String email, Set<String> userRole) {
+        return userDatabase.createUser(username, hashedPassword, salt, email, userRole);
+
     }
 
     //Method retrieving the hashed password of a user
@@ -26,4 +28,6 @@ public class UserService {
     public String getSalt(String username) throws SQLException {
         return userDatabase.getSalt(username);
     }
+
+
 }

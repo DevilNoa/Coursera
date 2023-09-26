@@ -11,7 +11,7 @@ public class PasswordHashingUtil {
     // Length of the salt in bytes
     private static final int SALT_LENGTH = 16;
 
-    //Method for hashing the password using a PBKDF2 with HMAC SHA-256
+    // Method for hashing the password using PBKDF2 with HMAC SHA-256
     public static String hashPassword(String password, String salt) {
         int iterations = 10000; // Number of iterations
         int keyLength = 256;    // Key length in bits
@@ -26,10 +26,8 @@ public class PasswordHashingUtil {
             // Get a SecretKeyFactory instance for PBKDF2 with HMAC SHA-256
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
 
-
             byte[] hashedPassword = factory.generateSecret(spec).getEncoded();      // Generate the hashed password as a byte array
             byte[] combined = new byte[saltBytes.length + hashedPassword.length];   // Combine the salt and hashed password into one byte array
-
 
             System.arraycopy(saltBytes, 0, combined, 0, saltBytes.length);
             System.arraycopy(hashedPassword, 0, combined, saltBytes.length, hashedPassword.length);
@@ -37,7 +35,6 @@ public class PasswordHashingUtil {
             // Encoding the combined byte array as Base64
             return Base64.getEncoder().encodeToString(combined);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-
             // Handle exceptions (e.g., log the error)
             return null;
         }
@@ -50,5 +47,4 @@ public class PasswordHashingUtil {
         random.nextBytes(salt);
         return Base64.getEncoder().encodeToString(salt);
     }
-
 }

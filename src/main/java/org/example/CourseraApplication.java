@@ -1,12 +1,8 @@
 package org.example;
 
 import io.dropwizard.core.Application;
-import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
-import org.example.api.CourseResponse;
-import org.example.api.InstructorResponse;
-import org.example.api.StudentResponse;
-import org.example.api.UserResponse;
+import org.example.api.*;
 import org.example.config.JwtConfiguration;
 import org.example.db.CoursesDatabase;
 import org.example.db.InstructorDatabase;
@@ -28,10 +24,6 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
     @Override
     public String getName() {
         return "Coursera";
-    }
-
-    @Override
-    public void initialize(final Bootstrap<CourseraConfiguration> bootstrap) {
     }
 
     @Override
@@ -63,6 +55,11 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
         final UserDatabase userDatabase = new UserDatabase(configuration.getConnection());
         final UserService userService = new UserService(userDatabase);
         environment.jersey().register(new UserResponse(userService));
+
+        final AuthResource authResource = new AuthResource(userDatabase);
+        environment.jersey().register(authResource);
+
+
     }
 
 }

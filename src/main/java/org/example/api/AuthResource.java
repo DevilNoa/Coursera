@@ -1,5 +1,6 @@
 package org.example.api;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -17,12 +18,12 @@ import static org.example.services.JwtService.generateToken;
 public class AuthResource {
     private final UserDatabase userDatabase;
 
-
     public AuthResource(UserDatabase userDatabase) {
         this.userDatabase = userDatabase;
     }
 
     @POST
+    @PermitAll
     @Path("/login")
     public Response login(@FormParam("username") String username, @FormParam("password") String password) {
         try {

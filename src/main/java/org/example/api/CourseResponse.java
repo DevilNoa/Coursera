@@ -1,6 +1,7 @@
 package org.example.api;
 
 import io.dropwizard.auth.Auth;
+import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -75,13 +76,14 @@ public class CourseResponse {
 
     // Endpoint to get all courses with authentication
     @GET
+    @PermitAll
     @Path("/all-courses-with-login")
-    public String getAllCoursesAsList(@Auth User authenticatedUser) {
+    public Response getAllCoursesAsList(@Auth User authenticatedUser) {
 
         if (authenticatedUser != null) {
-            return courseService.getAllCoursesASList().toString();
+            return Response.ok(courseService.getAllCoursesASList()).build();
         } else {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").build().toString();
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").build();
 
         }
     }

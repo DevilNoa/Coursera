@@ -5,7 +5,7 @@ logging:
     org.example: DEBUG
 
 jwtConfiguration:
-  secretKey: your-secret-key
+  secretKey: theBestKeptSecretIsToPretendThatThereIsntOne
   tokenExpirationMinutes: 60
 
 #jersey:
