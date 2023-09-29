@@ -20,7 +20,7 @@ public class CourseService {
     }
 
     //Method to add a new course to the db
-    public void addCourse(Courses newCourse) {
+    public void addCourse(Courses newCourse) throws SQLException {
         coursesDatabase.createCourse(newCourse.getId_courses(), newCourse.getId_instructor(), newCourse.getCourse_name(), newCourse.getTotal_time(), newCourse.getCredit());
     }
 

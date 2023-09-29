@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Student {
-    private final String id, firstName, lastName, timeCreated;
+    private  String id, firstName, lastName, timeCreated;
 
 
     @JsonCreator
@@ -13,6 +13,9 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.timeCreated = timeCreated;
+    }
+
+    public Student() {
     }
 
     public String getId() {
