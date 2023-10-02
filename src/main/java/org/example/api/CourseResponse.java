@@ -58,9 +58,7 @@ public class CourseResponse {
         if (course != null) {
             return Response.ok(course).build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Course not found")
-                    .build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Course not found").build();
         }
     }
 
@@ -72,9 +70,7 @@ public class CourseResponse {
         if (success) {
             return Response.ok("Course deleted successfully").build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Course not found or deletion failed")
-                    .build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Course not found or deletion failed").build();
         }
     }
 
@@ -137,9 +133,7 @@ public class CourseResponse {
                 if (course != null) {
                     return Response.ok(course).build();
                 } else {
-                    return Response.status(Response.Status.NOT_FOUND)
-                            .entity("Course not found")
-                            .build();
+                    return Response.status(Response.Status.NOT_FOUND).entity("Course not found").build();
                 }
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -163,9 +157,7 @@ public class CourseResponse {
                 if (success) {
                     return Response.ok("Course deleted successfully").build();
                 } else {
-                    return Response.status(Response.Status.NOT_FOUND)
-                            .entity("Course not found or deletion failed")
-                            .build();
+                    return Response.status(Response.Status.NOT_FOUND).entity("Course not found or deletion failed").build();
                 }
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED).build();

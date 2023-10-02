@@ -95,6 +95,7 @@ public class InstructorResponse {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
     //endpoint to create a new instructor
     @POST
     @Path("/new-instructor-login")

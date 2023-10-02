@@ -127,9 +127,7 @@ public class StudentResponse {
                 if (success) {
                     return Response.ok("Student updated successfully").build();
                 } else {
-                    return Response.status(Response.Status.NOT_FOUND)
-                            .entity("Student not found or update failed")
-                            .build();
+                    return Response.status(Response.Status.NOT_FOUND).entity("Student not found or update failed").build();
                 }
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -138,12 +136,13 @@ public class StudentResponse {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
     //Delete student by id
     @DELETE
     @Path("/delete-student-login/{id}")
-    public Response deleteStudent(@HeaderParam("Authorization")String token, @PathParam("id") String id ){
+    public Response deleteStudent(@HeaderParam("Authorization") String token, @PathParam("id") String id) {
         try {
-            if (token == null || !token.startsWith("Bearer ")){
+            if (token == null || !token.startsWith("Bearer ")) {
                 return Response.status(Response.Status.UNAUTHORIZED).build();
             }
             String jwtToken = token.substring("Bearer ".length()).trim();
@@ -152,14 +151,12 @@ public class StudentResponse {
                 if (success) {
                     return Response.ok("Student deleted successfully").build();
                 } else {
-                    return Response.status(Response.Status.NOT_FOUND)
-                            .entity("Student not found or deletion failed")
-                            .build();
+                    return Response.status(Response.Status.NOT_FOUND).entity("Student not found or deletion failed").build();
                 }
-            }else {
+            } else {
                 return Response.status(Response.Status.UNAUTHORIZED).build();
-                }
-            }catch (JWTVerificationException e){
+            }
+        } catch (JWTVerificationException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }

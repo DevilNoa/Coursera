@@ -1,10 +1,10 @@
 package org.example.core;
 
 public class UserRegistrationRequest {
-    private  String username;
-    private  String password;
-    private  String email;
-    private  String userRole;
+    private String username;
+    private String password;
+    private String email;
+    private String userRole;
 
     public UserRegistrationRequest(String username, String password, String email, String userRole) {
         this.username = username;

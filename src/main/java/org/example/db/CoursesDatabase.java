@@ -174,7 +174,7 @@ public class CoursesDatabase {
                 return null; // Course not found
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving course by ID"+e.getMessage());
+            System.out.println("Error retrieving course by ID" + e.getMessage());
             throw new RuntimeException(e);
         }
     }

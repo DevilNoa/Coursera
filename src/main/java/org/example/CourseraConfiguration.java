@@ -11,6 +11,8 @@ import java.sql.SQLException;
 public class CourseraConfiguration extends Configuration {
     //Declaring connection to the database
     private final Connection connection;
+    //Declaring a JwtConfiguration object
+    private JwtConfiguration jwtConfiguration;
 
     //Constructor for initializing thr configuration
     public CourseraConfiguration() {
@@ -30,23 +32,11 @@ public class CourseraConfiguration extends Configuration {
         }
     }
 
-    //Declaring a JwtConfiguration object
-    private JwtConfiguration jwtConfiguration;
-
-
     @JsonProperty("jwtConfiguration")
     public JwtConfiguration getJwtConfiguration() {
         return jwtConfiguration;
     }
 
-
-    public String getJwtSecretKey() {
-        return jwtConfiguration.getSecretKey();
-    }
-
-    public long getTokenExpirationMinutes() {
-        return jwtConfiguration.getTokenExpirationMinutes();
-    }
 
     public Connection getConnection() {
         return connection;

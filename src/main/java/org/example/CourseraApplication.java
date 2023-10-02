@@ -2,7 +2,10 @@ package org.example;
 
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Environment;
-import org.example.api.*;
+import org.example.api.CourseResponse;
+import org.example.api.InstructorResponse;
+import org.example.api.StudentResponse;
+import org.example.api.UserResponse;
 import org.example.config.JwtConfiguration;
 import org.example.db.CoursesDatabase;
 import org.example.db.InstructorDatabase;
