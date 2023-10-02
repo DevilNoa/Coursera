@@ -8,7 +8,6 @@ import org.example.db.CoursesDatabase;
 import org.example.db.InstructorDatabase;
 import org.example.db.StudentDatabase;
 import org.example.db.UserDatabase;
-import org.example.security.JwtAuthenticationFilter;
 import org.example.services.CourseService;
 import org.example.services.InstructorService;
 import org.example.services.StudentService;
@@ -32,9 +31,6 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
     public void run(final CourseraConfiguration configuration, final Environment environment) {
         //JWT configuration for the application
         final JwtConfiguration jwtConfig = configuration.getJwtConfiguration();
-        //JWT authentication filter for the program
-        final JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(jwtConfig.getSecretKey());
-        environment.jersey().register(jwtFilter);
 
         //Creating an API endpoints for the program and resources responsible for handling HTTP requests
 
@@ -57,11 +53,6 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
         final UserDatabase userDatabase = new UserDatabase(configuration.getConnection());
         final UserService userService = new UserService(userDatabase);
         environment.jersey().register(new UserResponse(userService));
-
-        final AuthResource authResource = new AuthResource(userDatabase);
-        environment.jersey().register(authResource);
-
-
     }
 
 }

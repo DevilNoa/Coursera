@@ -97,7 +97,7 @@ public class InstructorResponse {
     }
     //endpoint to create a new instructor
     @POST
-    @Path("/new-course-login")
+    @Path("/new-instructor-login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addInstructor(@HeaderParam("Authorization") String token, Instructor newInstructor) {
         try {
@@ -150,9 +150,9 @@ public class InstructorResponse {
             if (JwtService.verifyToken(jwtToken)) {
                 boolean success = instructorService.deleteInstructor(id_instructors);
                 if (success) {
-                    return Response.ok("Course deleted successfully").build();
+                    return Response.ok("Instructor removed successfully").build();
                 } else {
-                    return Response.status(Response.Status.NOT_FOUND).entity("Course not found or deletion failed").build();
+                    return Response.status(Response.Status.NOT_FOUND).entity("Instructor not found or deletion failed").build();
                 }
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED).build();
