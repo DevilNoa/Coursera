@@ -15,7 +15,7 @@ public class CoursesDatabase {
     }
 
     //Method to create a new course in the db
-    public void createCourse(int id_courses, int id_instructor, String course_name, short total_time, short credit) {
+    public void createCourse(int id_courses, int id_instructor, String course_name, short total_time, short credit) throws SQLException {
         try {
             String sql = "INSERT INTO courses (id_courses, course_name, id_instructor, total_time, credits) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -26,8 +26,7 @@ public class CoursesDatabase {
             statement.setShort(5, credit);
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error in creating course");
-            throw new RuntimeException(e);
+            throw new SQLException("Error in creating course", e);
         }
     }
 
@@ -123,27 +122,37 @@ public class CoursesDatabase {
     public List<Courses> getAllCoursesAsList() {
         List<Courses> coursesList = new ArrayList<>();
         try {
-            String sql = "SELECT * from courses";
+            String sql = "SELECT * FROM courses";
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
+
             while (result.next()) {
                 int id_courses = result.getInt("id_courses");
                 String course_name = result.getString("course_name");
                 int id_instructor = result.getInt("id_instructor");
-                String time_created = result.getString("time_created"); // Make sure this matches the data type in your database
+                String time_created = result.getString("time_created");
                 short total_time = result.getShort("total_time");
                 short credit = result.getShort("credits");
 
-                //Creating a course object and add it to the list
+
+//                System.out.println("id_courses: " + id_courses);
+//                System.out.println("course_name: " + course_name);
+//                System.out.println("id_instructor: " + id_instructor);
+//                System.out.println("time_created: " + time_created);
+//                System.out.println("total_time: " + total_time);
+//                System.out.println("credit: " + credit);
+
                 Courses course = new Courses(id_courses, course_name, id_instructor, time_created, total_time, credit);
                 coursesList.add(course);
             }
         } catch (SQLException e) {
-            System.out.println("Error in printing Courses");
+            System.out.println("Error in retrieving Courses");
+            e.printStackTrace(); // Print the exception stack trace for further debugging
             throw new RuntimeException(e);
         }
         return coursesList;
     }
+
 
     //Method to retrieve a course by ID
     public Courses getCourseByID(int id_course) {
@@ -165,7 +174,7 @@ public class CoursesDatabase {
                 return null; // Course not found
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving course by ID");
+            System.out.println("Error retrieving course by ID" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -196,7 +205,7 @@ public class CoursesDatabase {
     }
 
     //Method to delete course by ID
-    public boolean deleteCourse(int id_courses) {
+    public boolean deleteCourse(Integer id_courses) {
         try {
             String sql = "DELETE FROM courses WHERE id_courses = ?";
             PreparedStatement statement = connection.prepareStatement(sql);

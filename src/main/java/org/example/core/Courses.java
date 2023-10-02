@@ -1,6 +1,5 @@
 package org.example.core;
 
-import java.util.Set;
 
 public class Courses {
     private int id_courses;
@@ -9,26 +8,25 @@ public class Courses {
     private String time_created;
     private short total_time;
     private short credit;
-    private Set<User> users;
 
     public Courses(int id_courses, String course_name, int id_instructor, String time_created, short total_time, short credit) {
-    }
-
-    public Courses(int id_courses, String course_name, int id_instructor, String time_created, short total_time, short credit, Set<User> users) {
         this.id_courses = id_courses;
         this.course_name = course_name;
         this.id_instructor = id_instructor;
         this.time_created = time_created;
         this.total_time = total_time;
         this.credit = credit;
-        this.users = users;
+    }
+
+    public Courses() {
     }
 
     public int getId_courses() {
+//        System.out.println(id_courses+":inside getID_course");
         return id_courses;
     }
 
-    public void setId_courses(int id_courses) {
+    public void setId_courses(short id_courses) {
         this.id_courses = id_courses;
     }
 
@@ -41,6 +39,7 @@ public class Courses {
     }
 
     public int getId_instructor() {
+//        System.out.println(id_instructor+":inside get_idInstructor");
         return id_instructor;
     }
 
@@ -57,6 +56,7 @@ public class Courses {
     }
 
     public short getTotal_time() {
+//        System.out.println(total_time+":inside total time ");
         return total_time;
     }
 
@@ -71,18 +71,4 @@ public class Courses {
     public void setCredit(short credit) {
         this.credit = credit;
     }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Course[id_courses=%d, course_name='%s', time_created='%s', id_instructor=%d, total_time=%d, credit=%d]", id_courses, course_name, time_created, id_instructor, total_time, credit);
-    }
 }
-
