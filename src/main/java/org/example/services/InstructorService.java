@@ -24,15 +24,6 @@ public class InstructorService {
         instructorDatabase.createInstructor(newInstructor.getId(), newInstructor.getFirstName(), newInstructor.getLastName());
     }
 
-    //Method to retrieve instructor by ID
-    public Instructor getInstructorByID(int id) {
-        try {
-            return instructorDatabase.getInstructorByID(id);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving instructor by ID", e);
-        }
-    }
-
     //Method to update an instructor by ID
     public Instructor updateInstructor(int id, Instructor updatedInstructor) {
         try {

@@ -26,49 +26,32 @@ public class Courses {
         return id_courses;
     }
 
-    public void setId_courses(short id_courses) {
-        this.id_courses = id_courses;
-    }
 
     public String getCourse_name() {
         return course_name;
     }
 
-    public void setCourse_name(String course_name) {
-        this.course_name = course_name;
-    }
 
     public int getId_instructor() {
 //        System.out.println(id_instructor+":inside get_idInstructor");
         return id_instructor;
     }
 
-    public void setId_instructor(int id_instructor) {
-        this.id_instructor = id_instructor;
-    }
 
     public String getTime_created() {
         return time_created;
     }
 
-    public void setTime_created(String time_created) {
-        this.time_created = time_created;
-    }
 
     public short getTotal_time() {
 //        System.out.println(total_time+":inside total time ");
         return total_time;
     }
 
-    public void setTotal_time(short total_time) {
-        this.total_time = total_time;
-    }
 
     public short getCredit() {
         return credit;
     }
 
-    public void setCredit(short credit) {
-        this.credit = credit;
-    }
+
 }

@@ -13,7 +13,7 @@ import org.example.services.UserService;
 import java.sql.SQLException;
 import java.util.List;
 
-@Path("/courses")
+@Path("/course")
 @Produces(MediaType.APPLICATION_JSON)
 public class CourseResponse {
 
@@ -23,61 +23,10 @@ public class CourseResponse {
         this.courseService = courseService;
     }
 
-    // Endpoint to get all courses as a list
-    @GET
-    public String getAllCoursesAsList() {
-        return courseService.getAllCoursesASList().toString();
-    }
-
-    // Endpoint to add a new course
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void addCourse(Courses newCourse) throws SQLException {
-        courseService.addCourse(newCourse);
-    }
-
-    // Endpoint to get a course by ID
-    @GET
-    @Path("/{id}")
-    public String getCourseById(@PathParam("id") int courseId) {
-        Courses course = courseService.getCourseByID(courseId);
-        if (course != null) {
-            return course.toString();
-        } else {
-            return "Course not found with ID: " + courseId;
-        }
-    }
-
-    // Endpoint to update a course by ID
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateCourse(@PathParam("id") int id, Courses updatedCourse) {
-        Courses course = courseService.updateCourse(id, updatedCourse);
-
-        if (course != null) {
-            return Response.ok(course).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Course not found").build();
-        }
-    }
-
-    // Endpoint to delete a course by ID
-    @DELETE
-    @Path("/{id}")
-    public Response deleteCourse(@PathParam("id") int courseId) {
-        boolean success = courseService.deleteCourse(courseId);
-        if (success) {
-            return Response.ok("Course deleted successfully").build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Course not found or deletion failed").build();
-        }
-    }
 
     // Endpoint to get all courses with authentication
     @GET
     @PermitAll
-    @Path("/all-courses-with-login")
     public Response getAllCoursesAsList(@HeaderParam("Authorization") String token) {
         try {
             if (token == null || !token.startsWith("Bearer ")) {
@@ -98,7 +47,6 @@ public class CourseResponse {
 
     //Endpoint to create a new course with authentication
     @POST
-    @Path("/new-course-login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addCourse(@HeaderParam("Authorization") String token, Courses newCourse) {
         try {
@@ -119,7 +67,7 @@ public class CourseResponse {
 
     // Endpoint to update a course by id
     @PUT
-    @Path("/update-course-login/{id}")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateCourse(@HeaderParam("Authorization") String token, @PathParam("id") int id, Courses updatedCourse) {
         try {
@@ -145,7 +93,7 @@ public class CourseResponse {
 
     //Endpoint to delete a course by id
     @DELETE
-    @Path("/delete-course-login/{id}")
+    @Path("/{id}")
     public Response deleteCourse(@HeaderParam("Authorization") String token, @PathParam("id") int courseId) {
         try {
             if (token == null || !token.startsWith("Bearer ")) {

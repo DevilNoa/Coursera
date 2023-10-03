@@ -29,92 +29,6 @@ public class InstructorDatabase {
         }
     }
 
-
-    // Method to remove an instructor from the database by ID with output to the console
-    public void removeInstructor(Integer id_instructors) {
-        try {
-            String sql = "DELETE FROM instructors  WHERE id_instructors = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id_instructors);
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows > 0) {
-                System.out.println("Instructor removed successfully");
-            } else {
-                System.out.println("Instructor not found or removal failed");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error removing student");
-            throw new RuntimeException(e);
-        }
-    }
-
-    //Method to modify an instructor's information by ID with output to the console
-    public void instructorAlter(Integer id_instructors, String newFirstName, String newLastName) {
-        try {
-            String sql = "UPDATE instructors SET first_name = ?, last_name = ? WHERE id_instructors = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, newFirstName);
-            statement.setString(2, newLastName);
-            statement.setInt(3, id_instructors);
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows > 0) {
-                System.out.println("Instructor information updated successfully");
-            } else {
-                System.out.println("Instructor not found or update failed");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error updating instructor information");
-            throw new RuntimeException(e);
-        }
-    }
-
-    //Method to print an instructor by ID with output to the console
-    public void printInstructorByID(Integer id_instructors) {
-        try {
-            String sql = "SELECT * FROM instructors WHERE id_instructors = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id_instructors);
-            ResultSet result = statement.executeQuery();
-
-            if (result.next()) {
-                String id = result.getString("id_instructors");
-                String firstName = result.getString("first_name");
-                String lastName = result.getString("last_name");
-                String timeCreated = result.getString("time_created");
-
-                System.out.printf("%s-%s-%s-%s-\n", id, firstName, lastName, timeCreated);
-            } else {
-                System.out.println("Instructor not found");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error retrieving instructor information");
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    //Method to print an instructor by ID with output to the console
-    public void printAllInstructors() {
-        try {
-            String sql = "SELECT * FROM instructors";
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-
-            while (result.next()) {
-                String id = result.getString("id_instructors");
-                String firstName = result.getString("first_name");
-                String lastName = result.getString("last_name");
-                String timeCreated = result.getString("time_created");
-
-                System.out.printf("%s-%s-%s-%s-\n", id, firstName, lastName, timeCreated);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error receiving Instructors");
-            throw new RuntimeException(e);
-        }
-
-    }
-
     //Method to print a list of all instructors
     public List<Instructor> getAllInstructorsAsList() {
         List<Instructor> instructors = new ArrayList<>();
@@ -139,30 +53,6 @@ public class InstructorDatabase {
         }
 
         return instructors;
-    }
-
-    //Method to retrieve an instructor by ID
-    public Instructor getInstructorByID(int id_instructors) throws SQLException {
-        try {
-            String sql = "SELECT * FROM instructors WHERE id_instructors = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id_instructors);
-            ResultSet result = statement.executeQuery();
-
-            if (result.next()) {
-                Integer id = result.getInt("id_instructors");
-                String firstName = result.getString("first_name");
-                String lastName = result.getString("last_name");
-                String timeCreated = result.getString("time_created");
-
-                return new Instructor(id, firstName, lastName, timeCreated);
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("Error retrieving instructor by ID");
-            throw new RuntimeException(e);
-        }
     }
 
     // Method to update instructor by ID

@@ -12,7 +12,7 @@ import org.example.services.UserService;
 import java.util.List;
 
 
-@Path("/students")
+@Path("/student")
 @Produces(MediaType.APPLICATION_JSON)
 public class StudentResponse {
 
@@ -23,55 +23,6 @@ public class StudentResponse {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getAllStudents() {
-        // Call the method from the StudentService to get all students
-        return studentService.getAllStudentsAsList().toString(); // Implement this method in StudentService
-    }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void addStudent(Student newStudent) {
-        studentService.addStudent(newStudent);
-    }
-
-    @GET
-    @Path("/{id}")
-    public Response getStudentByID(@PathParam("id") String id) {
-        Student student = studentService.getStudentByID(id);
-        if (student != null) {
-            return Response.ok(student).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Student not found").build();
-        }
-    }
-
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateStudent(@PathParam("id") String id, Student updatedStudent) {
-        boolean success = studentService.updateStudent(id, updatedStudent);
-        if (success) {
-            return Response.ok("Student updated successfully").build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Student not found or update failed").build();
-        }
-    }
-
-    @DELETE
-    @Path("/{id}")
-    public Response deleteStudent(@PathParam("id") String id) {
-        boolean success = studentService.deleteStudent(id);
-        if (success) {
-            return Response.ok("Student deleted successfully").build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Student not found or delete failed").build();
-        }
-    }
-
-
-    @GET
-    @Path("/get-all-students-with-login")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllStudents(@HeaderParam("Authorization") String token) {
         try {
@@ -92,7 +43,6 @@ public class StudentResponse {
 
 
     @POST
-    @Path("/new-student-login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addStudent(@HeaderParam("Authorization") String token, Student newStudent) {
@@ -114,7 +64,7 @@ public class StudentResponse {
 
     // Endpoint to update the student  by id
     @PUT
-    @Path("/update-student-login/{id}")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateStudent(@HeaderParam("Authorization") String token, @PathParam("id") String id, Student updatedStudent) {
         try {
@@ -139,7 +89,7 @@ public class StudentResponse {
 
     //Delete student by id
     @DELETE
-    @Path("/delete-student-login/{id}")
+    @Path("/{id}")
     public Response deleteStudent(@HeaderParam("Authorization") String token, @PathParam("id") String id) {
         try {
             if (token == null || !token.startsWith("Bearer ")) {
