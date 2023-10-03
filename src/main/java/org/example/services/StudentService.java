@@ -25,15 +25,6 @@ public class StudentService {
         studentDatabase.createStudent(newStudent.getId(), newStudent.getFirstName(), newStudent.getLastName());
     }
 
-    //Method to retrieve a student by ID
-    public Student getStudentByID(String id) {
-        try {
-            return studentDatabase.getStudentByID(id);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving student by ID ", e);
-        }
-    }
-
     //Method to update a student by ID
     public boolean updateStudent(String id, Student updateStudent) {
         try {

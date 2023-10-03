@@ -24,11 +24,6 @@ public class CourseService {
         coursesDatabase.createCourse(newCourse.getId_courses(), newCourse.getId_instructor(), newCourse.getCourse_name(), newCourse.getTotal_time(), newCourse.getCredit());
     }
 
-    //Method to retrieve course by ID
-    public Courses getCourseByID(int id_course) {
-        return coursesDatabase.getCourseByID(id_course);
-    }
-
     //Method to update a course by ID
     public Courses updateCourse(int id, Courses updatedCourse) {
         try {
