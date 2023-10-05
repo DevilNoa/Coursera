@@ -46,6 +46,10 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
         final UserDatabase userDatabase = new UserDatabase(configuration.getConnection());
         userService = new UserService(userDatabase);
         environment.jersey().register(new UserResponse(userService));
+
+        final StudentReportDatabase studentReportDatabase = new StudentReportDatabase(configuration.getConnection());
+        final StudentReportService studentReportService = new StudentReportService(studentReportDatabase);
+        environment.jersey().register(new StudentReportResponse(studentReportService));
     }
 
 }
