@@ -1,12 +1,12 @@
 package org.example.core;
 
 public class StudentReport {
-    private String studentName;
-    private int totalCredit;
-    private String courseName;
-    private int totalTime;
-    private Integer creditIfCompleted;
-    private String instructorName;
+    private final String studentName;
+    private final int totalCredit;
+    private final String courseName;
+    private final int totalTime;
+    private final Integer creditIfCompleted;
+    private final String instructorName;
 
     public StudentReport(String studentName, int totalCredit, String courseName, int totalTime, Integer creditIfCompleted, String instructorName) {
         this.studentName = studentName;

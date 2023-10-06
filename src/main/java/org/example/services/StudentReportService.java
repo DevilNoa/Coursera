@@ -16,8 +16,7 @@ public class StudentReportService {
     public List<StudentReport> getStudentCourseReport() throws SQLException {
         try {
             // Your database query code here
-            List<StudentReport> reportDataList = reportDatabase.getStudentCourseReport();
-            return reportDataList;
+            return reportDatabase.getStudentCourseReport();
         } catch (SQLException e) {
             // Handle the exception or rethrow it
             e.printStackTrace(); // You can replace this with proper error handling
