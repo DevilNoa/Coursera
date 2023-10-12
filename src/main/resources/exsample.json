@@ -1,0 +1,44 @@
+{
+  "2" :{
+    "name": "gosho",
+    "totalCredits": 15,
+    "courses": [
+      {
+        "name": "kysane na gosho",
+        "totalTime": 8,
+        "credits": 5,
+        "instructorName": "posho"
+      },
+      {
+        "name": "kysane na gosho2",
+        "totalTime": 8,
+        "credits": 5,
+        "instructorName": "posho"
+      },
+      {
+        "name": "kysane na gosho3",
+        "totalTime": 8,
+        "credits": 5,
+        "instructorName": "posho"
+      }
+    ]
+  },
+  "2  ": {
+    "name": "golo6osho",
+    "totalCredits": 5,
+    "courses": [
+      {
+        "name": "kysane na gosho",
+        "totalTime": 8,
+        "credits": 5,
+        "instructorName": "posho"
+      },
+      {
+        "name": "kysane na gosho2",
+        "totalTime": 8,
+        "credits": 0,
+        "instructorName": "posho"
+      }
+    ]
+  }
+}

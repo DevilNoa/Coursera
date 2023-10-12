@@ -19,11 +19,10 @@ CREATE TABLE student_courses_xref (
                                       id_course INTEGER,
                                       completion_date DATE,
                                       FOREIGN KEY (id_student) REFERENCES students(id_students),
-                                      FOREIGN KEY (id_course) REFERENCES courses(id_courses)
+                                      FOREIGN KEY (id_course) REFERENCES courses(id_courses),
+                                      first_name VARCHAR(50),
+                                      last_name VARCHAR(50)
 );
-ALTER TABLE student_courses_xref
-    ADD COLUMN first_name VARCHAR(50),
-ADD COLUMN last_name VARCHAR(50);
 
 CREATE TABLE students (
                           id_students NCHAR(10) PRIMARY KEY,
@@ -39,13 +38,7 @@ CREATE TABLE users (
                        email VARCHAR(100) NOT NULL,
                        time_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
--- this are my sql tables
--- this is my but i want to change some stuff first i want to be able to pout the a minimum number of credits and also to be able to see let say the students with id 1,3,4 and only get them but if the input for it is empty to
--- retrive every student and also to be abel to specify the dates of the search lets say from 2023-09-04 to 2023-10-04
--- and the output of the endpoint shall be like this
--- Student name : (the full name of the student), Total Credits:(the combined number of credits for the completed courses )
---          Course name:(the name of the given course), Total time:(this is just total_time),Credits(only if the course is completed),Instructor Name:(id_instructors)
---this output is the same for every student
+
 
 
 DROP table users;
