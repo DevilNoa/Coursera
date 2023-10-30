@@ -7,7 +7,6 @@ import org.example.config.JwtConfiguration;
 import org.example.db.*;
 import org.example.services.*;
 
-
 public class CourseraApplication extends Application<CourseraConfiguration> {
 
     private UserService userService;
@@ -46,6 +45,12 @@ public class CourseraApplication extends Application<CourseraConfiguration> {
         final UserDatabase userDatabase = new UserDatabase(configuration.getConnection());
         userService = new UserService(userDatabase);
         environment.jersey().register(new UserResponse(userService));
+
+        // Report endpoint
+        final StudentReportDatabase studentReportDatabase = new StudentReportDatabase(configuration.getConnection());
+        final StudentReportServices studentReportServices = new StudentReportServices(studentReportDatabase);
+        environment.jersey().register(new StudentReportResponse(studentReportServices, userService));
+
     }
 
 }
