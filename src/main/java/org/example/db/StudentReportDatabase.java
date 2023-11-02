@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class StudentReportDatabase {
 
-    private Connection connection;
+    private final Connection connection;
 
     public StudentReportDatabase(Connection connection) {
         this.connection = connection;

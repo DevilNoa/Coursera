@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Set;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 public class User {
 
     private String username;
