@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.sql.Timestamp;
+import java.util.List;
+
 import org.example.config.TimestampDeserializer;
 import org.example.config.TimestampSerializer;
 

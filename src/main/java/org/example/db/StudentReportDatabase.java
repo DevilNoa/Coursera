@@ -12,52 +12,43 @@ public class StudentReportDatabase {
 
     public ResultSet createStudentReport(String[] studentIds, Timestamp startDate, Timestamp endDate, short minimumCredits) throws SQLException {
         try {
-            String sql = "WITH student_report AS (" +
-                    "SELECT " +
+            String sql = "SELECT " +
                     "s.id_students AS student_id, " +
                     "s.first_name || ' ' || s.last_name AS student_name, " +
                     "SUM(c.credits) AS total_credits, " +
-                    "array_agg(c.course_name) AS course_names, " +
-                    "array_agg(c.total_time) AS total_times, " +
-                    "array_agg(c.credits) AS course_credits, " +
-                    "array_agg(i.first_name || ' ' || i.last_name) AS instructor_names, " +
-                    "scx.completion_date " +
+                    "STRING_AGG(c.course_name, ', ') AS course_names, " +
+                    "STRING_AGG(c.total_time::VARCHAR, ', ') AS total_times, " +
+                    "STRING_AGG(i.first_name || ' ' || i.last_name, ', ') AS instructor_names " +
                     "FROM " +
                     "students s " +
-                    "INNER JOIN " +
+                    "JOIN " +
                     "student_courses_xref scx ON s.id_students = scx.id_student " +
-                    "INNER JOIN " +
+                    "JOIN " +
                     "courses c ON scx.id_course = c.id_courses " +
-                    "INNER JOIN " +
+                    "JOIN " +
                     "instructors i ON c.id_instructor = i.id_instructors " +
+                    "WHERE " +
+                    "(s.id_students = ANY(?) OR ? IS NULL) " +
+                    "AND " +
+                    "scx.completion_date BETWEEN ? AND ? " +
                     "GROUP BY " +
-                    "s.id_students, scx.completion_date " +
+                    "s.id_students " +
                     "HAVING " +
-                    "(? IS NULL OR s.id_students = ANY(?)) " +
-                    "AND (SUM(c.credits) >= ?) " +
-                    "AND (scx.completion_date BETWEEN ? AND ?) " +
-                    ")" +
-                    "SELECT " +
-                    "student_name, " +
-                    "total_credits, " +
-                    "unnest(course_names) AS course_name, " +
-                    "unnest(total_times) AS total_time, " +
-                    "unnest(course_credits) AS course_credit, " +
-                    "unnest(instructor_names) AS instructor_name, " +
-                    "completion_date " +
-                    "FROM " +
-                    "student_report";
+                    "SUM(c.credits) >= ? " +
+                    "ORDER BY " +
+                    "s.id_students";
 
             PreparedStatement statement = connection.prepareStatement(sql);
-            Array studentIdsArray = connection.createArrayOf("NCHAR", studentIds);
+            Array studentIdsArray = connection.createArrayOf("VARCHAR", studentIds);
             statement.setArray(1, studentIdsArray);
-            statement.setShort(2, minimumCredits);
+            statement.setArray(2, studentIdsArray); //WHERE
             statement.setTimestamp(3, startDate);
             statement.setTimestamp(4, endDate);
+            statement.setShort(5, minimumCredits);
             return statement.executeQuery();
         } catch (SQLException e) {
+         //   e.printStackTrace();
             throw new SQLException("Error in creating Report", e);
         }
     }
 }
-
