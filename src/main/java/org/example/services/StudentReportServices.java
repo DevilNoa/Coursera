@@ -38,9 +38,14 @@ public class StudentReportServices {
               Arrays.stream(resultSet.getString("total_times").split(", "))
                       .map(Integer::parseInt)
                       .toArray(Integer[]::new));
+      report.setCourseCredits(
+              Arrays.stream(resultSet.getString("course_credits").split(", ")) // Parse course_credits
+                      .map(Integer::parseInt)
+                      .toArray(Integer[]::new));
       report.setInstructorNames(resultSet.getString("instructor_names").split(", "));
       reports.add(report);
     }
+
 
     return reports;
   }

@@ -1,6 +1,8 @@
 package org.example.api;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -12,6 +14,7 @@ import org.example.core.StudentReport;
 import org.example.services.JwtService;
 import org.example.services.StudentReportServices;
 import org.example.services.UserService;
+import org.example.template.HtmlTemplateLoader;
 
 @Path("/student-report")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,7 +25,6 @@ public class StudentReportResponse {
       StudentReportServices studentReportServices, UserService userService) {
     this.studentReportServices = studentReportServices;
   }
-
 
   @GET
   public Response createStudentReport(
@@ -55,9 +57,20 @@ public class StudentReportResponse {
       List<StudentReport> studentReports =
           studentReportServices.createStudentReport(
               studentIdStr, startDate, endDate, minimumCredits);
-      return Response.ok(studentReports).build();
+
+      ObjectMapper objectMapper = new ObjectMapper();
+      String jsonData = objectMapper.writeValueAsString(studentReports);
+
+      String htmlTemplate = HtmlTemplateLoader.loadHtmlTemplate();
+      String htmlWithJson = htmlTemplate.replace("<!-- JSON_DATA -->", jsonData);
+
+      return Response.ok(htmlWithJson).build();
     } catch (JWTVerificationException | IllegalArgumentException | SQLException e) {
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+    } catch (JsonProcessingException e) {
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+          .entity("Error processing JSON data")
+          .build();
     }
   }
 }

@@ -18,7 +18,8 @@ public class StudentReportDatabase {
                     "SUM(c.credits) AS total_credits, " +
                     "STRING_AGG(c.course_name, ', ') AS course_names, " +
                     "STRING_AGG(c.total_time::VARCHAR, ', ') AS total_times, " +
-                    "STRING_AGG(i.first_name || ' ' || i.last_name, ', ') AS instructor_names " +
+                    "STRING_AGG(i.first_name || ' ' || i.last_name, ', ') AS instructor_names, " +
+                    "STRING_AGG(c.credits::VARCHAR, ', ') AS course_credits " +
                     "FROM " +
                     "students s " +
                     "JOIN " +
