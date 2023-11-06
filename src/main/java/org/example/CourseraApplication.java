@@ -9,48 +9,48 @@ import org.example.services.*;
 
 public class CourseraApplication extends Application<CourseraConfiguration> {
 
-    private UserService userService;
+  private UserService userService;
 
-    public static void main(final String[] args) throws Exception {
-        new CourseraApplication().run(args);
-    }
+  public static void main(final String[] args) throws Exception {
+    new CourseraApplication().run(args);
+  }
 
-    @Override
-    public String getName() {
-        return "Coursera";
-    }
+  @Override
+  public String getName() {
+    return "Coursera";
+  }
 
-    @Override
-    public void run(final CourseraConfiguration configuration, final Environment environment) {
-        //JWT configuration for the application
-        final JwtConfiguration jwtConfig = configuration.getJwtConfiguration();
+  @Override
+  public void run(final CourseraConfiguration configuration, final Environment environment) {
+    // JWT configuration for the application
+    final JwtConfiguration jwtConfig = configuration.getJwtConfiguration();
 
+    // Student endpoint
+    final StudentDatabase studentDatabase = new StudentDatabase(configuration.getConnection());
+    final StudentService studentService = new StudentService(studentDatabase);
+    environment.jersey().register(new StudentResponse(studentService, userService));
 
-        //Student endpoint
-        final StudentDatabase studentDatabase = new StudentDatabase(configuration.getConnection());
-        final StudentService studentService = new StudentService(studentDatabase);
-        environment.jersey().register(new StudentResponse(studentService, userService));
+    // Instructor endpoint
+    final InstructorDatabase instructorDatabase =
+        new InstructorDatabase(configuration.getConnection());
+    final InstructorService instructorService = new InstructorService(instructorDatabase);
+    environment.jersey().register(new InstructorResponse(instructorService, userService));
 
-        //Instructor endpoint
-        final InstructorDatabase instructorDatabase = new InstructorDatabase(configuration.getConnection());
-        final InstructorService instructorService = new InstructorService(instructorDatabase);
-        environment.jersey().register(new InstructorResponse(instructorService, userService));
+    // Courses endpoint
+    final CoursesDatabase coursesDatabase = new CoursesDatabase(configuration.getConnection());
+    final CourseService courseService = new CourseService(coursesDatabase);
+    environment.jersey().register(new CourseResponse(courseService, userService));
 
-        //Courses endpoint
-        final CoursesDatabase coursesDatabase = new CoursesDatabase(configuration.getConnection());
-        final CourseService courseService = new CourseService(coursesDatabase);
-        environment.jersey().register(new CourseResponse(courseService, userService));
+    // User endpoint
+    final UserDatabase userDatabase = new UserDatabase(configuration.getConnection());
+    userService = new UserService(userDatabase);
+    environment.jersey().register(new UserResponse(userService));
 
-        //User endpoint
-        final UserDatabase userDatabase = new UserDatabase(configuration.getConnection());
-        userService = new UserService(userDatabase);
-        environment.jersey().register(new UserResponse(userService));
-
-        // Report endpoint
-        final StudentReportDatabase studentReportDatabase = new StudentReportDatabase(configuration.getConnection());
-        final StudentReportServices studentReportServices = new StudentReportServices(studentReportDatabase);
-        environment.jersey().register(new StudentReportResponse(studentReportServices, userService));
-
-    }
-
+    // Report endpoint
+    final StudentReportDatabase studentReportDatabase =
+        new StudentReportDatabase(configuration.getConnection());
+    final StudentReportServices studentReportServices =
+        new StudentReportServices(studentReportDatabase);
+    environment.jersey().register(new StudentReportResponse(studentReportServices, userService));
+  }
 }

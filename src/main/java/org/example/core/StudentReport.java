@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.sql.Timestamp;
-
+import java.util.List;
 import org.example.config.TimestampDeserializer;
 import org.example.config.TimestampSerializer;
 
@@ -24,13 +24,16 @@ public class StudentReport {
   private String[] courseNames;
 
   @JsonProperty("totalTimes")
-  private Integer[] totalTimes;
+  private Short[] totalTimes;
 
   @JsonProperty("courseCredits")
-  private Integer[] courseCredits;
+  private Short[] courseCredits;
 
   @JsonProperty("instructorNames")
   private String[] instructorNames;
+
+  @JsonProperty("courses")
+  private List<StudentCourse> courses;
 
   @JsonProperty("completionDate")
   @JsonSerialize(using = TimestampSerializer.class)
@@ -71,19 +74,19 @@ public class StudentReport {
     this.courseNames = courseNames;
   }
 
-  public Integer[] getTotalTimes() {
+  public Short[] getTotalTimes() {
     return totalTimes;
   }
 
-  public void setTotalTimes(Integer[] totalTimes) {
+  public void setTotalTimes(Short[] totalTimes) {
     this.totalTimes = totalTimes;
   }
 
-  public Integer[] getCourseCredits() {
+  public Short[] getCourseCredits() {
     return courseCredits;
   }
 
-  public void setCourseCredits(Integer[] courseCredits) {
+  public void setCourseCredits(Short[] courseCredits) {
     this.courseCredits = courseCredits;
   }
 
@@ -93,6 +96,14 @@ public class StudentReport {
 
   public void setInstructorNames(String[] instructorNames) {
     this.instructorNames = instructorNames;
+  }
+
+  public List<StudentCourse> getCourses() {
+    return courses;
+  }
+
+  public void setCourses(List<StudentCourse> courses) {
+    this.courses = courses;
   }
 
   public Timestamp getCompletionDate() {
